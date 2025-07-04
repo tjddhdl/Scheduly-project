@@ -38,9 +38,9 @@ public class Like {
 	@JoinColumn(name = "user")
 	User user;
 	
-	@ManyToOne
-	@JoinColumn(name = "board")
-	Boadrd board;
+//	@ManyToOne
+//	@JoinColumn(name = "board")
+//	Boadrd board;
 	
 	@ManyToOne
 	@JoinColumn(name = "plan")
