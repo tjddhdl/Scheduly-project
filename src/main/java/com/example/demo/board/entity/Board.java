@@ -2,6 +2,8 @@ package com.example.demo.board.entity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.example.demo.apiPlan.entity.APIPlan;
 
 import jakarta.persistence.Column;
@@ -43,5 +45,6 @@ public class Board extends BaseEntity{
 	@Column(nullable = false, length = 1000)
 	String board_content;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	LocalDateTime boardTime;
 }
