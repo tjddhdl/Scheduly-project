@@ -1,6 +1,10 @@
-package com.example.demo.apiPlanDay.entity;
+package com.example.demo.comment.entity;
 
-import com.example.demo.apiPlan.entity.APIPlan;
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.demo.board.entity.Board;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,23 +22,30 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "tbl_api_plan_day")
+@Table(name = "tbl_comment")
 @Getter
 @Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class APIPlanDay {
+public class Comment extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int apiPlanDayNo;
+	int commentNo;
 	
-	@OneToMany
-	@JoinColumn(name = "api_plan_no")
-	APIPlan apiPlan;
+	@ManyToOne
+	@JoinColumn(name = "user_no")
+	User user;
 	
-	@Column(nullable = false, length = 50)
-	String apiPlanDayContent;
+	@ManyToOne
+	@JoinColumn(name = "board_no")
+	Board board;
+	
+	@Column(nullable = false)
+	String commentContent;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	LocalDateTime commentTime;
 }

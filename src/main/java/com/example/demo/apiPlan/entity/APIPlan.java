@@ -1,14 +1,10 @@
-package com.example.demo.apiPlanDay.entity;
-
-import com.example.demo.apiPlan.entity.APIPlan;
+package com.example.demo.apiPlan.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,23 +14,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "tbl_api_plan_day")
+@Table(name = "tbl_api_plan")
 @Getter
 @Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class APIPlanDay {
-
+public class APIPlan {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int apiPlanDayNo;
-	
-	@OneToMany
-	@JoinColumn(name = "api_plan_no")
-	APIPlan apiPlan;
+	int apiPlanNo;
 	
 	@Column(nullable = false, length = 50)
-	String apiPlanDayContent;
+	String apiPlanName;
 }

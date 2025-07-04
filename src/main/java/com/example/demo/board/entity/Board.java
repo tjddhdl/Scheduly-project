@@ -1,4 +1,6 @@
-package com.example.demo.apiPlanDay.entity;
+package com.example.demo.board.entity;
+
+import java.time.LocalDateTime;
 
 import com.example.demo.apiPlan.entity.APIPlan;
 
@@ -8,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,23 +20,28 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "tbl_api_plan_day")
+@Table(name = "tbl_board")
 @Getter
 @Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class APIPlanDay {
+public class Board extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int apiPlanDayNo;
+	int boardNo;
 	
-	@OneToMany
+	@OneToOne
 	@JoinColumn(name = "api_plan_no")
 	APIPlan apiPlan;
 	
 	@Column(nullable = false, length = 50)
-	String apiPlanDayContent;
+	String boardName;
+	
+	@Column(nullable = false, length = 1000)
+	String board_content;
+	
+	LocalDateTime boardTime;
 }
