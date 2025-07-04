@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.demo.board.entity.Board;
+import com.example.demo.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
