@@ -90,7 +90,6 @@ public class PlanServiceImpl implements PlanService {
 		ObjectMapper mapper = new ObjectMapper();
 		PlanJsonDTO dto;
 		try {
-			System.out.println("안됐음");
 			dto = mapper.readValue(json, PlanJsonDTO.class);
 			Plan plan = Plan.builder().planName(dto.getStudy()).status(Status.before).user(user).build();
 			repository.save(plan);
@@ -102,7 +101,6 @@ public class PlanServiceImpl implements PlanService {
 				planDayRepository.save(planDay);
 			}
 		} catch (JsonProcessingException e) {
-			System.out.println("안됐음");
 			throw new RuntimeException("JSON 파싱 실패", e);
 		}
 		return 0;
