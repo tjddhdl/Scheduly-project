@@ -91,19 +91,19 @@ public class PlanServiceImpl implements PlanService {
 		PlanJsonDTO dto;
 		try {
 			dto = mapper.readValue(json, PlanJsonDTO.class);
-			Plan plan = Plan.builder().planName(dto.getStudy()).status(Status.before).user(user).build();
-			repository.save(plan);
-			for(StudyItem studyItem : dto.getList()) {
-				PlanDay planDay = PlanDay.builder().plan(plan)
-						.planDayContent(studyItem.getContent())
-						.planDayDate(LocalDate.parse(studyItem.getDate()))
-						.status(StatusDay.before).build();
-				planDayRepository.save(planDay);
-			}
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException("JSON 파싱 실패", e);
 		}
-		return 0;
+		Plan plan = Plan.builder().planName(dto.getStudy()).status(Status.before).user(user).build();
+		repository.save(plan);
+		for(StudyItem studyItem : dto.getList()) {
+			PlanDay planDay = PlanDay.builder().plan(plan)
+					.planDayContent(studyItem.getContent())
+					.planDayDate(LocalDate.parse(studyItem.getDate()))
+					.status(StatusDay.before).build();
+			planDayRepository.save(planDay);
+		}
+		return plan.planNo;
 	}
 
 }

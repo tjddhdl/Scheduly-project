@@ -19,4 +19,6 @@ public interface UserService {
 
 		return user;
 	}
+	
+	void register();
 }
