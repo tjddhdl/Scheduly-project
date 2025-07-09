@@ -1,6 +1,5 @@
 package com.example.demo.Plan;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -42,10 +41,12 @@ public class PlanServiceTest {
 		dto.setStatus("before");
 		service.modify(dto);
 	}
+	@Test
 	void 삭제() {
 		service.remove(4);
 	}
 	
+	@Test
 	void json추가() {
 		String json = gptService.createPlan("2025-07-09부터 간단한 요리 연습 플랜 10일치 짜줘");
 		System.out.println(json);

@@ -36,6 +36,12 @@ dependencies {
 
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.4.1'
 	implementation 'org.json:json:20240303'	
+	
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'net.minidev:json-smart:2.4.7'
 }
 
 tasks.named('test') {
