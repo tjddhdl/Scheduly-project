@@ -17,9 +17,9 @@ public class PlanDayServiceTest {
 	@Test
 	void 생성() {
 		PlanDayDto planDayDto = PlanDayDto.builder()
-												.planNo(4)
-												.planDayDate(LocalDate.now())
-												.planDayContent("스프링")
+												.planNo(1)
+												.planDayDate(LocalDate.of(2025, 7, 7))
+												.planDayContent("ㄴㄴㄴㄴ")
 												.status("before")
 												.build();
 		service.register(planDayDto);
