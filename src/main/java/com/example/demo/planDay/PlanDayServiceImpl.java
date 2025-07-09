@@ -1,15 +1,23 @@
 package com.example.demo.planDay;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 
 @Service
 public class PlanDayServiceImpl implements PlanDayService {
 
 	@Autowired
 	PlanDayRepository repository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
 	public int register(PlanDayDto dayDto) {
@@ -61,6 +69,14 @@ public class PlanDayServiceImpl implements PlanDayService {
 		if (optional.isPresent()) {
 			repository.deleteById(planDayNo);
 		}
+	}
+
+	@Override
+	public List<PlanDayDto> getList(int no) {
+		User user = User.builder().userNo(no).build();
+		List<PlanDay> list = repository.findByPlanUser(user);
+		List<PlanDayDto> result = list.stream().map(entity -> entityToDto(entity)).collect(Collectors.toList());
+		return result;
 	}
 
 }

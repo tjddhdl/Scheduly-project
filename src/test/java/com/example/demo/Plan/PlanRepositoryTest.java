@@ -34,7 +34,7 @@ public class PlanRepositoryTest {
 		user.setPassword("1234");
 		user.setRole(Role.free);
 		userRepository.save(user);
-		Plan plan = Plan.builder().user(user).planName("공부2").status(Status.finished).build();
+		Plan plan = Plan.builder().user(user).planName("공부3").status(Status.finished).build();
 		repository.save(plan);
 		System.out.println(plan);
 	}

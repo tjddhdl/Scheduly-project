@@ -1,7 +1,12 @@
 package com.example.demo.planDay;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PlanDayRepository extends JpaRepository<PlanDay, Integer> {
 
+import com.example.demo.user.User;
+
+public interface PlanDayRepository extends JpaRepository<PlanDay, Integer> {
+	List<PlanDay> findByPlanUser(User user);
 }

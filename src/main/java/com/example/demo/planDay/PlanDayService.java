@@ -1,12 +1,16 @@
 package com.example.demo.planDay;
 
 
+import java.util.List;
+
 import com.example.demo.plan.Plan;
 
 public interface PlanDayService {
 	int register(PlanDayDto dayDto);
 
 	PlanDayDto read(int planDayNo);
+	
+	List<PlanDayDto> getList(int no);
 
 	void modify(PlanDayDto planDayDto);
 

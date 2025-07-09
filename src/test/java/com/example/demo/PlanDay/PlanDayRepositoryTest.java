@@ -21,12 +21,12 @@ public class PlanDayRepositoryTest {
 	@Test
 	void 플랜추가() {
 		
-		Plan plan = Plan.builder().planNo(3).build();
+		Plan plan = Plan.builder().planNo(1).build();
 		
 		PlanDay day = PlanDay.builder()
 									.plan(plan)
-									.planDayDate(LocalDate.of(2025, 7, 7))
-									.planDayContent("1단원 공부")
+									.planDayDate(LocalDate.of(2025, 7, 9))
+									.planDayContent("2단원 공부2")
 									.status(StatusDay.ongoing)
 									.build();
 		
