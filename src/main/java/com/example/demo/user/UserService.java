@@ -1,12 +1,12 @@
 package com.example.demo.user;
 
 public interface UserService {
+
 	boolean register(UserDto dto);
 
-	UserDto read(int userNo);
+	UserDto read(String userId);
 
 	default UserDto entityToDto(User user) {
-
 		UserDto dto = UserDto.builder().userNo(user.getUserNo()).userId(user.getUserId()).password(user.getPassword())
 				.userName(user.getUserName()).role(user.getRole().toString()).build();
 
@@ -19,6 +19,4 @@ public interface UserService {
 
 		return user;
 	}
-	
-	void register();
 }
