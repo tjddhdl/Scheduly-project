@@ -1,6 +1,10 @@
 package com.example.demo.PlanDay;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +36,6 @@ public class PlanDayRepositoryTest {
 		
 		repository.save(day);
 	}
+	
 	
 }

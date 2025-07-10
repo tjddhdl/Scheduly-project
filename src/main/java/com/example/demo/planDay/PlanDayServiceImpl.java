@@ -72,9 +72,10 @@ public class PlanDayServiceImpl implements PlanDayService {
 	}
 
 	@Override
-	public List<PlanDayDto> getList(int no) {
-		User user = User.builder().userNo(no).build();
-		List<PlanDay> list = repository.findByPlanUser(user);
+	public List<PlanDayDto> getList(int userNo) {
+		
+		List<PlanDay> list = repository.findByPlanUserNo(userNo);
+
 		List<PlanDayDto> result = list.stream().map(entity -> entityToDto(entity)).collect(Collectors.toList());
 		return result;
 	}

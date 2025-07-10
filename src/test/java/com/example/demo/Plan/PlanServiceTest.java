@@ -20,7 +20,7 @@ public class PlanServiceTest {
 	
 	@Test
 	void 플랜생성() {
-		PlanDto dto = PlanDto.builder().userNo(2).planName("생성").status("before").build();
+		PlanDto dto = PlanDto.builder().userNo(3).planName("테스트중").status("before").build();
 		service.register(dto);
 	}
 	@Test

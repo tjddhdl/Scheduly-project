@@ -49,7 +49,7 @@ public class SecurityConfig {
 		
 		http.authorizeHttpRequests()
 		.requestMatchers("/**").permitAll()
-		.requestMatchers("/board/**").authenticated()
+		.requestMatchers("/**").authenticated()
 		.anyRequest().permitAll();
 		// 주소 적어넣어야됨
 		
