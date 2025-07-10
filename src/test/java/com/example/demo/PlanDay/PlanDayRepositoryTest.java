@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> refs/heads/leeseongo
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
