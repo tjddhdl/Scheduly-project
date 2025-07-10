@@ -40,7 +40,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		ObjectMapper mapper = new ObjectMapper();
 		HashMap<String, String> map = mapper.readValue(body, HashMap.class);
 		
-		String id = map.get("id");
+		String id = map.get("userId");
 		String password = map.get("password");
 		if(id==null) {
 			throw new BadCredentialsException("id가 없습니다");

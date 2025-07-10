@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public boolean register(UserDto dto) {
-		if(userRepository.findByUserId(dto.getUserId())!=null) {
+		if(userRepository.findByUserId(dto.getUserId())==null) {
 			dto.setRole("free");
 			User user = dtoToEntity(dto);
 			String enpw = encoder.encode(user.getPassword());
