@@ -38,6 +38,6 @@ public class User {
 	String userName;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(nullable = true)
 	Role role;
 }

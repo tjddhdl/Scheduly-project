@@ -33,7 +33,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		// 나중에 추가해야함
-		String[] patternArr = {""};
+		String[] patternArr = {"/board/*"};
 		matcher = new AntPathMatcher();
 		for(String patt : patternArr) {
 			boolean result = matcher.match(patt, request.getRequestURI());
