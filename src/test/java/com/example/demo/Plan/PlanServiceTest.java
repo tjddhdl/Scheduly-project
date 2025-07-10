@@ -48,8 +48,11 @@ public class PlanServiceTest {
 	
 	@Test
 	void json추가() {
-		String json = gptService.createPlan("2025-07-10 하루 지루함 참기 플랜 짜줘");
+		String json = gptService.createPlan("2025-07-10부터 일주일간 컴퓨터 기능 공부 플랜 짜줘");
 		System.out.println(json);
 		service.registerAPI(1, json);
+		String json2 = gptService.convertPlan(json, "이거 한 3일치로 단축해줘");
+		System.out.println(json2);
+		service.registerAPI(1, json2);
 	}
 }
