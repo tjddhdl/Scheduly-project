@@ -32,7 +32,8 @@ public class GptService {
 		JSONObject message = new JSONObject();
 		message.put("role", "system");
 		message.put("content",
-				"요구사항에 맞춰 { \"study\": \"주제명\", \"list\": [ { \"date\": \"YYYY-MM-DD\", \"content\": \"내용\"}]}의 양식으로 한국어로 공부 계획을 만들어. 날짜는 하루씩 올라가게 만들고 끝나면 요구사항 다시 확인하면서 틀린 내용 수정해. 반드시 JSON데이터만 출력해");
+				"{\"study\": \"공부 주제명\",\"list\":[{\"date\": \"YYYY-MM-DD\",\"content\": \"그날 공부할 내용\",\"details\":[{\"detail\": \"세부 학습 항목\"}]}]"
+				+ "}의 양식으로 요청받은 내용을 바탕으로 한국어로 된 공부 계획을 만들어. 세부 학습 항목은 그날 공부할 내용을 단계적으로 세분화해서 만들어. 각 세부 학습 항목은 수가 달라도 괜찮아. 날짜는 하루씩 올라가게 만들고 끝나면 요구사항 다시 확인하면서 틀린 내용 수정해. 반드시 JSON데이터만 출력해");
 		messages.put(message);
 
 		JSONObject message2 = new JSONObject();

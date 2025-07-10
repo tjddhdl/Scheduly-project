@@ -13,5 +13,11 @@ public class PlanJsonDTO {
 	public static class StudyItem {
 		private String date;
 		private String content;
+		private List<StudyItemDetail> details;
+		
+		@Data
+		public static class StudyItemDetail{
+			private String detail;
+		}
 	}
 }

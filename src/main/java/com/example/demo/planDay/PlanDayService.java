@@ -2,6 +2,7 @@ package com.example.demo.planDay;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.demo.plan.Plan;
 
@@ -24,6 +25,7 @@ public interface PlanDayService {
 										.planDayDate(planDay.getPlanDayDate())
 										.planDayContent(planDay.getPlanDayContent())
 										.status(planDay.getStatus().toString())
+										.details(planDay.getDetails())
 										.build();
 		return plandayDto;
 	}
@@ -37,6 +39,8 @@ public interface PlanDayService {
 									.planDayDate(dayDto.getPlanDayDate())
 									.planDayContent(dayDto.getPlanDayContent())
 									.status(StatusDay.valueOf(dayDto.getStatus()))
+									.details(dayDto.getDetails().stream().map(d -> new PlanDayDetail(d.getDetail(), d.getDetailStatus()))
+											.collect(Collectors.toList()))
 									.build();
 
 		return planDay;

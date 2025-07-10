@@ -26,7 +26,7 @@ public class PlanDayServiceTest {
 	}
 	@Test
 	void 조회() {
-		PlanDayDto planDayDto = service.read(2);
+		PlanDayDto planDayDto = service.read(1);
 		
 		System.out.println(planDayDto);
 	}
