@@ -2,7 +2,6 @@ package com.example.demo.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 
 public class UserServiceImpl implements UserService{
@@ -15,7 +14,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public boolean register(UserDto dto) {
-		if(userRepository.findByUserId(dto.getUserId())!=null) {
+		if(userRepository.findByUserId(dto.getUserId())==null) {
 			dto.setRole("free");
 			User user = dtoToEntity(dto);
 			String enpw = encoder.encode(user.getPassword());
