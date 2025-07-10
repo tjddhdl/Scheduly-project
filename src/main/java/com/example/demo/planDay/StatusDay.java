@@ -1,5 +1,10 @@
 package com.example.demo.planDay;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum StatusDay {
-before, ongoing, finished
+@JsonProperty("before")	
+BEFORE, 
+@JsonProperty("finished")
+FINISHED
 }

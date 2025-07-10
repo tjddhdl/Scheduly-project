@@ -51,11 +51,11 @@ public class PlanDayServiceImpl implements PlanDayService {
 
 		if (optional.isPresent()) {
 			PlanDay planDay = optional.get();
-
+			PlanDay apply = dtoToEntity(planDayDto);
 			planDay.setPlanDayDate(planDayDto.getPlanDayDate());
 			planDay.setPlanDayContent(planDayDto.getPlanDayContent());
 			planDay.setStatus(StatusDay.valueOf(planDayDto.getStatus()));
-
+			planDay.setDetails(apply.getDetails());
 			repository.save(planDay);
 		}
 

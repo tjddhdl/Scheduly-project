@@ -1,6 +1,7 @@
 package com.example.demo.plan;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.plan.PlanJsonDTO.StudyItem;
+import com.example.demo.plan.PlanJsonDTO.StudyItem.StudyItemDetail;
 import com.example.demo.planDay.PlanDay;
+import com.example.demo.planDay.PlanDayDetail;
 import com.example.demo.planDay.PlanDayRepository;
 import com.example.demo.planDay.StatusDay;
 import com.example.demo.user.User;
@@ -25,7 +28,7 @@ public class PlanServiceImpl implements PlanService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	PlanDayRepository planDayRepository;
 
@@ -94,13 +97,20 @@ public class PlanServiceImpl implements PlanService {
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException("JSON 파싱 실패", e);
 		}
-		Plan plan = Plan.builder().planName(dto.getStudy()).status(Status.before).user(user).build();
+		Plan plan = Plan.builder().planName(dto.getStudy()).status(Status.BEFORE).user(user).build();
 		repository.save(plan);
-		for(StudyItem studyItem : dto.getList()) {
-			PlanDay planDay = PlanDay.builder().plan(plan)
-					.planDayContent(studyItem.getContent())
-					.planDayDate(LocalDate.parse(studyItem.getDate()))
-					.status(StatusDay.before).build();
+		for (StudyItem studyItem : dto.getList()) {
+			PlanDay planDay = PlanDay.builder().plan(plan).planDayContent(studyItem.getContent())
+					.planDayDate(LocalDate.parse(studyItem.getDate())).status(StatusDay.BEFORE).build();
+			if (studyItem.getDetails() != null && !studyItem.getDetails().isEmpty()) {
+				List<PlanDayDetail> detailes = new ArrayList<>();
+				for (StudyItemDetail detailDto : studyItem.getDetails()) {
+					PlanDayDetail detail = PlanDayDetail.builder().detail(detailDto.getDetail())
+							.detailStatus(StatusDay.BEFORE).build();
+					detailes.add(detail);
+				}
+				planDay.setDetails(detailes);
+			}
 			planDayRepository.save(planDay);
 		}
 		return plan.planNo;

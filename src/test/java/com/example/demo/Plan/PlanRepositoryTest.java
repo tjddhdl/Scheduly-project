@@ -69,7 +69,7 @@ public class PlanRepositoryTest {
 			PlanDay planDay = PlanDay.builder().plan(plan)
 					.planDayContent(studyItem.getContent())
 					.planDayDate(LocalDate.parse(studyItem.getDate()))
-					.status(StatusDay.before).build();
+					.status(StatusDay.BEFORE).build();
 			planDayRepository.save(planDay);
 		}
 	}

@@ -1,11 +1,14 @@
 package com.example.demo.planDay;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.example.demo.plan.Plan;
 import com.example.demo.plan.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,6 +20,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,4 +53,7 @@ public class PlanDay {
 	@Column
 	StatusDay status;
 	
+	@Column(columnDefinition = "json")
+	@Convert(converter = PlanDayDetailsConverter.class)
+	List<PlanDayDetail> details;
 }

@@ -51,5 +51,14 @@ public class APIPlan {
 	public static class StudyItem {
 		private String date;
 		private String content;
+		private List<StudyItemDetail> details;
+	}
+	
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class StudyItemDetail{
+		private String detail;
 	}
 }

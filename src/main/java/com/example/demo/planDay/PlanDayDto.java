@@ -1,6 +1,7 @@
 package com.example.demo.planDay;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +22,5 @@ public class PlanDayDto {
 	LocalDate planDayDate;
 	String planDayContent;
 	String status;
+	List<PlanDayDetail> details;
 }
