@@ -9,25 +9,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping
+@RequestMapping("/plan")
 public class PlanController {
 
-	@Autowired
-	PlanService planService;
-	
-	// 나중에 react에 맞춰 수정 필요
-	// 요구사항에 맞춰 플랜 생성
-	@PostMapping("")
-	public void asd(@RequestBody String json) {
-	
-	}
-	
+    @Autowired
+    private PlanService planService;
 
+    @PostMapping("/api")
+    public ResponseEntity<Integer> registerFromGPT(
+            @RequestParam int userNo,
+            @RequestBody String gptJson) {
 
+        int planNo = planService.registerAPI(userNo, gptJson);
+        return ResponseEntity.ok(planNo);
+    }
 }
+
