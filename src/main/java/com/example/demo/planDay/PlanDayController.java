@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,20 +21,23 @@ public class PlanDayController {
 	PlanDayService service;
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@GetMapping("/list")
 	public ResponseEntity<List<PlanDayDto>> getList(Principal principal) {
-		
+
 		String userId = principal.getName();
 		User user = userRepository.findByUserId(userId);
 		int userNo = user.getUserNo();
-		
+
 		List<PlanDayDto> list = service.getList(userNo);
-		
+
 		return ResponseEntity.ok(list);
 	}
-	
-	
-	
-	
+
+	@PostMapping("/modify")
+	public ResponseEntity<Boolean> planDayModify(@RequestParam PlanDayDto dto, Principal principal) {
+		service.modify(dto);
+		return ResponseEntity.ok(true);
+	}
+
 }
