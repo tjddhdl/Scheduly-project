@@ -1,10 +1,20 @@
 package com.example.demo.apiPlan;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.apiPlan.APIPlan.APIPlanContentList;
+import com.example.demo.apiPlan.APIPlan.StudyItem;
+import com.example.demo.apiPlan.APIPlan.StudyItemDetail;
+import com.example.demo.plan.Plan;
+import com.example.demo.plan.PlanRepository;
+import com.example.demo.planDay.PlanDay;
+import com.example.demo.planDay.PlanDayDetail;
+import com.example.demo.planDay.PlanDayRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -13,6 +23,12 @@ public class APIPlanServiceImpl implements APIPlanService{
 
 	@Autowired
 	APIPlanRepository apiPlanRepository;
+	
+	@Autowired
+	PlanRepository planRepository;
+	
+	@Autowired
+	PlanDayRepository planDayRepository;
 	
 	@Override
 	public int register(APIPlanDTO dto) throws JsonMappingException, JsonProcessingException {
@@ -37,6 +53,7 @@ public class APIPlanServiceImpl implements APIPlanService{
 		return null;
 	}
 
+	// apiPlan의 json 반환하는 메소드
 	@Override
 	public String download(int no) throws JsonProcessingException {
 		Optional<APIPlan> optional = apiPlanRepository.findById(no);
@@ -46,6 +63,44 @@ public class APIPlanServiceImpl implements APIPlanService{
 			return dto.getApiPlanContentList();
 		}
 		return null;
+	}
+
+	// 플랜 번호를 받아 플랜을 apiplan db에 업로드하는 메서드
+	@Override
+	public boolean upload(int no) {
+		// plan 옮기기
+		APIPlanContentList contentList = new APIPlanContentList();
+		Optional<Plan> optional = planRepository.findById(no);
+		if(optional.isPresent()) {
+			Plan plan = optional.get();
+		contentList.setStudy(plan.getPlanName());
+		
+		// planDay 옮기기
+		List<StudyItem> list = new ArrayList<>();
+		List<PlanDay> days = planDayRepository.findByPlan(no);
+		for(PlanDay day : days) {
+			StudyItem studyItem = new StudyItem();
+			studyItem.setContent(day.getPlanDayContent());
+			studyItem.setDate(day.getPlanDayDate().toString());
+			
+			// planDayDetails 옮기기
+			List<StudyItemDetail> studyItemDetails = new ArrayList<>();
+			for(PlanDayDetail detail : day.getDetails()) {
+				StudyItemDetail itemDetail = new StudyItemDetail();
+				itemDetail.setDetail(detail.getDetail());
+				studyItemDetails.add(itemDetail);
+			}
+			studyItem.setDetails(studyItemDetails);
+			list.add(studyItem);
+		}
+		contentList.setList(list);
+		APIPlan apiPlan = new APIPlan();
+		apiPlan.setApiPlanContentList(contentList);
+		apiPlanRepository.save(apiPlan);
+		return true;
+		}else {
+			return false;			
+		}
 	}
 
 }

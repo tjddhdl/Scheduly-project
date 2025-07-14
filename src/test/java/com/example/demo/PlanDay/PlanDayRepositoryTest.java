@@ -41,5 +41,12 @@ public class PlanDayRepositoryTest {
 		repository.save(day);
 	}
 	
+	@Test
+	void 플랜데이조회() {
+		List<PlanDay> list = repository.findByPlan(2);
+		for(PlanDay day : list) {
+			System.out.println(day);
+		}
+	}
 	
 }

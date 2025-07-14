@@ -27,4 +27,7 @@ public interface APIPlanService {
 	void remove(int no);
 	APIPlanDTO read (int no) throws JsonProcessingException;
 	String download(int no) throws JsonProcessingException;
+	
+	// 플랜 번호를 받아 플랜을 apiplan db에 업로드하는 메서드
+	boolean upload(int no);
 }

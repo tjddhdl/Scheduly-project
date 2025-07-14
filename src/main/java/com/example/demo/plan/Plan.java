@@ -1,9 +1,5 @@
 package com.example.demo.plan;
 
-import java.time.LocalDate;
-
-import org.springframework.data.annotation.CreatedDate;
-
 import com.example.demo.user.User;
 
 import jakarta.persistence.Column;

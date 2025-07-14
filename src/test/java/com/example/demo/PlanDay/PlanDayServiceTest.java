@@ -1,11 +1,14 @@
 package com.example.demo.PlanDay;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.demo.planDay.PlanDayDetail;
 import com.example.demo.planDay.PlanDayDto;
 import com.example.demo.planDay.PlanDayService;
 
@@ -16,11 +19,13 @@ public class PlanDayServiceTest {
 	
 	@Test
 	void 생성() {
+		List<PlanDayDetail> list = new ArrayList<>();
 		PlanDayDto planDayDto = PlanDayDto.builder()
-												.planNo(2)
+												.planNo(3)
 												.planDayDate(LocalDate.of(2025, 7, 15))
 												.planDayContent("테스트중")
-												.status("before")
+												.status("BEFORE")
+												.details(list)
 												.build();
 		service.register(planDayDto);
 	}

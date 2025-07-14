@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -17,6 +19,7 @@ import io.jsonwebtoken.impl.DefaultJws;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
+@Component
 public class JWTUtil {
 	private String secretKey = "zerock12345678";
 	

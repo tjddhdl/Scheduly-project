@@ -69,4 +69,10 @@ public class APIPlanServiceTest {
 		String json = apiPlanService.download(2);
 		System.out.println(json);
 	}
+	
+	@Test
+	void 플랜업로드() {
+		boolean a = apiPlanService.upload(3);
+		System.out.println(a);
+	}
 }

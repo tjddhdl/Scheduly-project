@@ -23,7 +23,7 @@ public class PlanDayServiceImpl implements PlanDayService {
 	public int register(PlanDayDto dayDto) {
 
 		PlanDay planDay = dtoToEntity(dayDto);
-
+		
 		repository.save(planDay);
 		int newNo = planDay.getPlanDayNo();
 

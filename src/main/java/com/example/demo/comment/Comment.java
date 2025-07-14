@@ -53,6 +53,9 @@ public class Comment extends BaseEntity{
 	@Column(nullable = false)
 	String commentContent;
 	
+	@Column(nullable = false)
+	boolean deleteStatus;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentCommentNo")
 	private Comment parentComment;
@@ -60,4 +63,5 @@ public class Comment extends BaseEntity{
 	@OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<Comment> childComments = new ArrayList<>();
+	
 }

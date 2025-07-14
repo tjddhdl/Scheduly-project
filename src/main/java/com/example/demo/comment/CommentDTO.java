@@ -1,6 +1,8 @@
 package com.example.demo.comment;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +28,10 @@ public class CommentDTO {
 	String commentContent;
 	
 	LocalDateTime commentTime;
+	
+	Integer parentCommentNo;
+	
+	private boolean deleteStatus;
+	
+	private List<CommentDTO> childComments;
 }
