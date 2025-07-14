@@ -26,6 +26,9 @@ public class PlanDayServiceTest {
 												.planDayContent("테스트중")
 												.status("BEFORE")
 												.details(list)
+												.planDayDate(LocalDate.of(2025, 7, 10))
+												.planDayContent("테스트중ㅇㅇ")
+												.status("BEFORE")
 												.build();
 		service.register(planDayDto);
 	}
