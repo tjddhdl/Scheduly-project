@@ -1,5 +1,10 @@
 package com.example.demo.board;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.example.demo.apiPlan.APIPlan;
 
 public interface BoardService {
@@ -21,4 +26,5 @@ public interface BoardService {
 	void remove(int no);
 	BoardDTO read(int no);
 	int modify(BoardDTO dto);
+	Page<BoardDTO> findAll(Pageable pageable);
 }

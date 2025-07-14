@@ -1,8 +1,11 @@
 package com.example.demo.board;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,6 +53,13 @@ public class BoardServiceImpl implements BoardService {
 			return old.getBoardNo();
 		}
 		return 0;
+	}
+
+	@Override
+	public Page<BoardDTO> findAll(Pageable pageable) {
+		Page<Board> list = boardRepository.findAll(pageable);
+		Page<BoardDTO> page = list.map(e->EntityToDTO(e));
+		return page;
 	}
 
 }

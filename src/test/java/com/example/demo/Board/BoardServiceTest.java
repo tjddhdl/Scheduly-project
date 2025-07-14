@@ -3,6 +3,9 @@ package com.example.demo.Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.example.demo.apiPlan.APIPlan;
 import com.example.demo.board.Board;
@@ -52,4 +55,12 @@ public class BoardServiceTest {
 		boardService.remove(6);
 	}
 	
+	@Test
+	void page() {
+		Pageable pageable = PageRequest.of(0, 10);
+		Page<BoardDTO> page = boardService.findAll(pageable);
+		for(BoardDTO dto : page) {
+			System.out.println(dto);
+		}
+	}
 }
