@@ -48,9 +48,8 @@ public class SecurityConfig {
 		http.csrf().disable();
 		
 		http.authorizeHttpRequests()
-		.requestMatchers("/**").permitAll()
-		.requestMatchers("/**").authenticated()
-		.anyRequest().permitAll();
+		.requestMatchers("/register","/login").permitAll()
+		.anyRequest().authenticated();
 		// 주소 적어넣어야됨
 		
 		AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
