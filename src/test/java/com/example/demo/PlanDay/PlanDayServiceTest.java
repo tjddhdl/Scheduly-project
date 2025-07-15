@@ -63,4 +63,8 @@ public class PlanDayServiceTest {
 	void addJson() {
 		service.addJson(36, "뜌땨");
 	}
+	@Test
+	void removeJson() {
+		service.removeJson(36, 0);
+	}
 }

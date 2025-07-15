@@ -58,4 +58,10 @@ public class PlanDayController {
 		service.addJson(Integer.parseInt(map.get("planDayNo").toString()), map.get("content").toString());
 	}
 
+	@PostMapping("/removeJson")
+	public void planDayRemoveJson(@RequestBody Map<String, Object>map, Principal principal) {
+		service.removeJson(Integer.parseInt(map.get("planDayNo").toString()),
+				Integer.parseInt(map.get("detailIndex").toString()));
+	}
+	
 }

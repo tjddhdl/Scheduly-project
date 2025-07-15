@@ -1,5 +1,6 @@
 package com.example.demo.planDay;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -114,6 +115,14 @@ public class PlanDayServiceImpl implements PlanDayService {
 		List<PlanDayDetail> list = day.getDetails();
 		PlanDayDetail detail = PlanDayDetail.builder().detail(content).detailStatus(StatusDay.BEFORE).build();
 		list.add(detail);
+		repository.save(day);
+	}
+
+	@Override
+	public void removeJson(int planDayNo, int detailKey) {
+		PlanDay day = repository.findById(planDayNo).get();
+		List<PlanDayDetail> list = day.getDetails();
+		list.remove(detailKey);
 		repository.save(day);
 	}
 }
