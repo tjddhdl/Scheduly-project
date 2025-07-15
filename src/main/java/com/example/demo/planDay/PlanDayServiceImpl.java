@@ -125,4 +125,24 @@ public class PlanDayServiceImpl implements PlanDayService {
 		list.remove(detailKey);
 		repository.save(day);
 	}
+
+	@Override
+	public void moveJson(int planDayNo, int detailKey, String move) {
+		PlanDay day = repository.findById(planDayNo).get();
+		List<PlanDayDetail> list = day.getDetails();
+		if(move.matches("up")) {
+			if(detailKey>0&&detailKey<list.size()) {
+				PlanDayDetail detail = list.get(detailKey-1);
+				list.set(detailKey-1, list.get(detailKey));
+				list.set(detailKey, detail);
+			}
+		}else if(move.matches("down")) {
+			if(detailKey<list.size()-1&&detailKey>=0) {
+				PlanDayDetail detail = list.get(detailKey+1);
+				list.set(detailKey+1, list.get(detailKey));
+				list.set(detailKey, detail);
+			}
+		}
+		repository.save(day);
+	}
 }

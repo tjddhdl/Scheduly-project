@@ -24,6 +24,8 @@ public interface PlanDayService {
 	void addJson(int planDayNo, String content);
 	
 	void removeJson(int planDayNo, int detailKey);
+	
+	void moveJson(int planDayNo, int detailKey, String move);
 
 	default PlanDayDto entityToDto(PlanDay planDay) {
 		int plan = planDay.getPlan().getPlanNo();

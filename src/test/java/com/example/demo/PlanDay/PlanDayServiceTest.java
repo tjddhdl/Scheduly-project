@@ -67,4 +67,9 @@ public class PlanDayServiceTest {
 	void removeJson() {
 		service.removeJson(36, 0);
 	}
+	
+	@Test
+	void moveJson() {
+		service.moveJson(1, 2, "up");
+	}
 }
