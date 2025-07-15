@@ -50,7 +50,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests()
 		.requestMatchers("/register","/login").permitAll()
 		.requestMatchers("/jsonmodify").hasAnyRole("free","pay")
-		.requestMatchers("jsonstatus").hasAnyRole("free","pay")
+		.requestMatchers("/jsonstatus").hasAnyRole("free","pay")
 		.requestMatchers("/addJson").hasAnyRole("free","pay")
 		.requestMatchers("/removeJson").hasAnyRole("free","pay")
 		.requestMatchers("/moveJson").hasAnyRole("free","pay")
