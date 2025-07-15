@@ -15,6 +15,8 @@ public interface PlanDayService {
 
 	void modify(PlanDayDto planDayDto);
 
+	void jsonModify(int planDayNo, int detailKey, String detail);
+	
 	void remove(int planDayNo);
 
 	default PlanDayDto entityToDto(PlanDay planDay) {

@@ -10,7 +10,6 @@ import com.example.demo.user.UserDto;
 public class CustomUser extends User {
 	
 	public CustomUser(UserDto dto) {
-		super(dto.getUserId(),dto.getPassword(),Arrays.asList(new SimpleGrantedAuthority(dto.getRole())));
+		super(dto.getUserId(),dto.getPassword(),Arrays.asList(new SimpleGrantedAuthority("ROLE_"+dto.getRole())));
 	}
-
 }

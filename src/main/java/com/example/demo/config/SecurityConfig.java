@@ -49,6 +49,7 @@ public class SecurityConfig {
 		
 		http.authorizeHttpRequests()
 		.requestMatchers("/register","/login").permitAll()
+		.requestMatchers("/jsonmodify").hasAnyRole("free","pay")
 		.anyRequest().authenticated();
 		// 주소 적어넣어야됨
 		

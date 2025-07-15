@@ -47,7 +47,12 @@ public class PlanDayServiceTest {
 	}
 	@Test
 	void 삭제() {
-		
 		service.remove(2);
+	}
+	
+	@Test
+	void json수정() {
+		String detail = "웅나";
+		service.jsonModify(1, 0, detail);
 	}
 }
