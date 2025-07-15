@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,9 +41,10 @@ public class PlanDayController {
 	}
 
 	@PostMapping("/jsonmodify")
-	public void planDayJsonModify(@RequestBody Map<String, Object> map, Principal principal) {
-		service.jsonModify(Integer.parseInt(map.get("planDayNo").toString()),
+	public ResponseEntity<PlanDayDetail> planDayJsonModify(@RequestBody Map<String, Object> map, Principal principal) {
+		PlanDayDetail detail = service.jsonModify(Integer.parseInt(map.get("planDayNo").toString()),
 				Integer.parseInt(map.get("detailIndex").toString()), map.get("detail").toString());
+		return ResponseEntity.ok(detail);
 	}
 
 	@PostMapping("/jsonstatus")
@@ -55,11 +55,11 @@ public class PlanDayController {
 
 	@PostMapping("/addJson")
 	public ResponseEntity<PlanDayDetail> planDayAddJson(@RequestBody Map<String, Object> map, Principal principal) {
-		int planDayNo = Integer.parseInt(map.get("planDayNo").toString());
-		String content = map.get("content").toString();
+
 		
-		PlanDayDetail addedDetail = service.addJson(planDayNo, content);
-		return ResponseEntity.ok(addedDetail);
+		PlanDayDetail detail = service.addJson(Integer.parseInt(map.get("planDayNo").toString()), map.get("content").toString());
+		return ResponseEntity.ok(detail);
+
 	}
 
 	@PostMapping("/removeJson")

@@ -24,7 +24,7 @@ public class BoardController {
 	BoardService boardService;
 
 	@GetMapping("/main")
-	public ResponseEntity<Map<String, Object>> getBoard(@RequestParam(defaultValue = "0") int page,
+	public ResponseEntity<Map<String, Object>> getBoard(@RequestParam(name="page", defaultValue = "0") int page,
 			Principal principal) {
 		Pageable pageable = PageRequest.of(page, 10);
 		Page<BoardDTO> pageList = boardService.findAll(pageable);
@@ -33,6 +33,12 @@ public class BoardController {
 		resMap.put("totalPage", pageList.getTotalPages());
 		resMap.put("currentPage", pageList.getNumber());
 		return ResponseEntity.ok(resMap);
+	}
+	
+	@GetMapping("/detail")
+	public ResponseEntity<BoardDTO> getBoardDetail(@RequestParam(name="boardNo") int boardNo, Principal principal){
+		BoardDTO dto = boardService.read(boardNo);
+		return ResponseEntity.ok(dto);
 	}
 
 }
