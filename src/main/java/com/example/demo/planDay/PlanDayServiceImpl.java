@@ -83,14 +83,16 @@ public class PlanDayServiceImpl implements PlanDayService {
 
 	// detail 정보 수정할때
 	@Override
-	public void jsonModify(int planDayNo, int detailKey, String detail) {
+	public PlanDayDetail jsonModify(int planDayNo, int detailKey, String detail) {
 		PlanDay day = repository.findById(planDayNo).get();
 		List<PlanDayDetail> list = day.getDetails();
 		if(list.size()>detailKey) {
 		PlanDayDetail dayDetail = list.get(detailKey);
 		dayDetail.setDetail(detail);
 		repository.save(day);
+		return dayDetail;
 		}
+		return null;
 	}
 
 	@Override
@@ -110,12 +112,13 @@ public class PlanDayServiceImpl implements PlanDayService {
 	}
 
 	@Override
-	public void addJson(int planDayNo, String content) {
+	public PlanDayDetail addJson(int planDayNo, String content) {
 		PlanDay day = repository.findById(planDayNo).get();
 		List<PlanDayDetail> list = day.getDetails();
 		PlanDayDetail detail = PlanDayDetail.builder().detail(content).detailStatus(StatusDay.BEFORE).build();
 		list.add(detail);
 		repository.save(day);
+		return detail;
 	}
 
 	@Override

@@ -15,13 +15,13 @@ public interface PlanDayService {
 
 	void modify(PlanDayDto planDayDto);
 
-	void jsonModify(int planDayNo, int detailKey, String detail);
+	PlanDayDetail jsonModify(int planDayNo, int detailKey, String detail);
 	
 	void remove(int planDayNo);
 	
 	void statusChange(int planDayNo, int detailKey);
 	
-	void addJson(int planDayNo, String content);
+	PlanDayDetail addJson(int planDayNo, String content);
 	
 	void removeJson(int planDayNo, int detailKey);
 	

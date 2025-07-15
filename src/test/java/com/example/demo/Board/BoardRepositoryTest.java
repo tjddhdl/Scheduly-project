@@ -16,8 +16,8 @@ public class BoardRepositoryTest {
 	
 	@Test
 	void 보드등록() {
-		APIPlan apiPlan = APIPlan.builder().apiPlanNo(1).build();
-		Board board = Board.builder().apiPlan(apiPlan).boardName("테스트")
+		APIPlan apiPlan = APIPlan.builder().apiPlanNo(4).build();
+		Board board = Board.builder().apiPlan(apiPlan).boardName("컴퓨터일반")
 				.boardContent("테스트").likeCount(0).build();
 		boardRepository.save(board);
 	}

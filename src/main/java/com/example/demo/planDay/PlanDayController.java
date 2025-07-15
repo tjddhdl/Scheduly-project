@@ -42,9 +42,10 @@ public class PlanDayController {
 	}
 
 	@PostMapping("/jsonmodify")
-	public void planDayJsonModify(@RequestBody Map<String, Object> map, Principal principal) {
-		service.jsonModify(Integer.parseInt(map.get("planDayNo").toString()),
+	public ResponseEntity<PlanDayDetail> planDayJsonModify(@RequestBody Map<String, Object> map, Principal principal) {
+		PlanDayDetail detail = service.jsonModify(Integer.parseInt(map.get("planDayNo").toString()),
 				Integer.parseInt(map.get("detailIndex").toString()), map.get("detail").toString());
+		return ResponseEntity.ok(detail);
 	}
 
 	@PostMapping("/jsonstatus")
@@ -54,8 +55,9 @@ public class PlanDayController {
 	}
 
 	@PostMapping("/addJson")
-	public void planDayAddJson(@RequestBody Map<String, Object> map, Principal principal) {
-		service.addJson(Integer.parseInt(map.get("planDayNo").toString()), map.get("content").toString());
+	public ResponseEntity<PlanDayDetail> planDayAddJson(@RequestBody Map<String, Object> map, Principal principal) {
+		PlanDayDetail detail = service.addJson(Integer.parseInt(map.get("planDayNo").toString()), map.get("content").toString());
+		return ResponseEntity.ok(detail);
 	}
 
 	@PostMapping("/removeJson")
