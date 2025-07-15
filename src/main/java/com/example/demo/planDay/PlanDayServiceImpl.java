@@ -91,4 +91,19 @@ public class PlanDayServiceImpl implements PlanDayService {
 		repository.save(day);
 		}
 	}
+
+	@Override
+	public void statusChange(int planDayNo, int detailKey) {
+
+		PlanDay day = repository.findById(planDayNo).get();
+		List<PlanDayDetail> list = day.getDetails();
+		if(list.size()>detailKey) {
+			PlanDayDetail dayDetail = list.get(detailKey);
+			if(dayDetail.getDetailStatus()==StatusDay.BEFORE) {
+				dayDetail.setDetailStatus(StatusDay.FINISHED);
+			}else {
+				dayDetail.setDetailStatus(StatusDay.BEFORE);
+			}
+		}
+	}
 }

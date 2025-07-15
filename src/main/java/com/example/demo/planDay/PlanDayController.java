@@ -47,4 +47,10 @@ public class PlanDayController {
 				Integer.parseInt(map.get("detailIndex").toString()), map.get("detail").toString());
 	}
 
+	@PostMapping("/jsonstatus")
+	public void planDayJsonStatus(@RequestBody Map<String, Object> map, Principal principal) {
+		service.statusChange(Integer.parseInt(map.get("planDayNo").toString()),
+				Integer.parseInt(map.get("detailIndex").toString()));
+	}
+
 }

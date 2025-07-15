@@ -55,4 +55,8 @@ public class PlanDayServiceTest {
 		String detail = "웅나";
 		service.jsonModify(1, 0, detail);
 	}
+	@Test
+	void jsonstatus() {
+		service.statusChange(1, 0);
+	}
 }

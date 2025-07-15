@@ -18,6 +18,8 @@ public interface PlanDayService {
 	void jsonModify(int planDayNo, int detailKey, String detail);
 	
 	void remove(int planDayNo);
+	
+	void statusChange(int planDayNo, int detailKey);
 
 	default PlanDayDto entityToDto(PlanDay planDay) {
 		int plan = planDay.getPlan().getPlanNo();
