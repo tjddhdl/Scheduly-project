@@ -52,5 +52,10 @@ public class PlanDayController {
 		service.statusChange(Integer.parseInt(map.get("planDayNo").toString()),
 				Integer.parseInt(map.get("detailIndex").toString()));
 	}
+	
+	@PostMapping("/addJson")
+	public void planDayAddJson(@RequestBody Map<String, Object>map, Principal principal) {
+		service.addJson(Integer.parseInt(map.get("planDayNo").toString()), map.get("content").toString());
+	}
 
 }

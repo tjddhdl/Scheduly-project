@@ -59,4 +59,8 @@ public class PlanDayServiceTest {
 	void jsonstatus() {
 		service.statusChange(1, 0);
 	}
+	@Test
+	void addJson() {
+		service.addJson(36, "뜌땨");
+	}
 }

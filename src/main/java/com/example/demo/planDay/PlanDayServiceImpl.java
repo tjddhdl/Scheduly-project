@@ -107,4 +107,13 @@ public class PlanDayServiceImpl implements PlanDayService {
 		}
 		repository.save(day);
 	}
+
+	@Override
+	public void addJson(int planDayNo, String content) {
+		PlanDay day = repository.findById(planDayNo).get();
+		List<PlanDayDetail> list = day.getDetails();
+		PlanDayDetail detail = PlanDayDetail.builder().detail(content).detailStatus(StatusDay.BEFORE).build();
+		list.add(detail);
+		repository.save(day);
+	}
 }
