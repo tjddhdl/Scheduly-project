@@ -105,5 +105,6 @@ public class PlanDayServiceImpl implements PlanDayService {
 				dayDetail.setDetailStatus(StatusDay.BEFORE);
 			}
 		}
+		repository.save(day);
 	}
 }

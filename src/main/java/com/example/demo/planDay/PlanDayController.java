@@ -49,7 +49,6 @@ public class PlanDayController {
 
 	@PostMapping("/jsonstatus")
 	public void planDayJsonStatus(@RequestBody Map<String, Object> map, Principal principal) {
-		System.out.println(map);
 		service.statusChange(Integer.parseInt(map.get("planDayNo").toString()),
 				Integer.parseInt(map.get("detailIndex").toString()));
 	}
