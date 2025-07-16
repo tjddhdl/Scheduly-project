@@ -32,9 +32,22 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// 나중에 추가해야함
-		String[] patternArr = {"/**"};
+		String[] excludePatterns = {
+				"/register",
+				"/login"
+		};
 		matcher = new AntPathMatcher();
+		
+		for(String exclude : excludePatterns) {
+			if(matcher.match(exclude, request.getRequestURI())) {
+				filterChain.doFilter(request, response);
+				return;
+			}
+		}
+		
+		// 나중에 추가해야함
+		String[] patternArr = {
+				"/**"};
 		for(String patt : patternArr) {
 			boolean result = matcher.match(patt, request.getRequestURI());
 			if(result) {
