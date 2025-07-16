@@ -1,6 +1,7 @@
 package com.example.demo.gpt;
 
 import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,10 @@ public class GptController {
 
 	// 플랜 수정
 	@PostMapping("/fixPlan")
-	public ResponseEntity<String> fixPlan(@RequestBody() String userOrder, @RequestBody String gptJson, Principal principal){
+	public ResponseEntity<String> fixPlan(@RequestBody() Map<String, String> map, Principal principal){
+		String gptJson = map.get("gptJson");
+		String userOrder = map.get("userOrder");
+		
 		String planJson = service.convertPlan(gptJson, userOrder);
 		return ResponseEntity.ok(planJson);
 	}
