@@ -55,8 +55,11 @@ public class PlanDayController {
 
 	@PostMapping("/addJson")
 	public ResponseEntity<PlanDayDetail> planDayAddJson(@RequestBody Map<String, Object> map, Principal principal) {
+
+		
 		PlanDayDetail detail = service.addJson(Integer.parseInt(map.get("planDayNo").toString()), map.get("content").toString());
 		return ResponseEntity.ok(detail);
+
 	}
 
 	@PostMapping("/removeJson")

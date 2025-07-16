@@ -21,7 +21,9 @@ public interface PlanDayService {
 	
 	void statusChange(int planDayNo, int detailKey);
 	
+
 	PlanDayDetail addJson(int planDayNo, String content);
+
 	
 	void removeJson(int planDayNo, int detailKey);
 	
