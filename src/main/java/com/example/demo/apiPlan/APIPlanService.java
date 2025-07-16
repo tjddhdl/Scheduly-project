@@ -1,6 +1,7 @@
 package com.example.demo.apiPlan;
 
 import com.example.demo.apiPlan.APIPlan.APIPlanContentList;
+import com.example.demo.user.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,14 +12,15 @@ public interface APIPlanService {
 	
 	default APIPlan dtoToEntity(APIPlanDTO dto) throws JsonMappingException, JsonProcessingException {
 		APIPlanContentList contentList = objectMapper.readValue(dto.getApiPlanContentList(), APIPlanContentList.class);
-		APIPlan apiPlan = APIPlan.builder().apiPlanNo(dto.getApiPlanNo())
+		User user = User.builder().userNo(dto.getUser()).build();
+		APIPlan apiPlan = APIPlan.builder().apiPlanNo(dto.getApiPlanNo()).user(user)
 				.apiPlanContentList(contentList).build();
 		return apiPlan;
 	}
 	
 	default APIPlanDTO EntitytoDTO(APIPlan apiPlan) throws JsonProcessingException {
 		String json = objectMapper.writeValueAsString(apiPlan.getApiPlanContentList());
-		APIPlanDTO dto = APIPlanDTO.builder().apiPlanNo(apiPlan.getApiPlanNo())
+		APIPlanDTO dto = APIPlanDTO.builder().apiPlanNo(apiPlan.getApiPlanNo()).user(apiPlan.getUser().getUserNo())
 				.apiPlanContentList(json).build();
 		return dto;
 	}

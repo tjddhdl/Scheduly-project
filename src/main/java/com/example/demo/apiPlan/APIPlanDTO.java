@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class APIPlanDTO {
 	int apiPlanNo;
-	
+	int user;
 	String apiPlanContentList;
 
 }

@@ -23,14 +23,27 @@ public class GptController {
 	@Autowired
 	UserRepository userRepository;
 	
+	// 플랜 생성만
 	@PostMapping("/createPlan")
-	public ResponseEntity<Integer> createPlan(@RequestBody String userOrder, Principal principal){
+	public ResponseEntity<String> createPlan(@RequestBody String userOrder, Principal principal){
+		String planJson = service.createPlan(userOrder);
+		return ResponseEntity.ok(planJson);
+	}
+
+	// 플랜 수정
+	@PostMapping("/fixPlan")
+	public ResponseEntity<String> fixPlan(@RequestBody() String userOrder, @RequestBody String gptJson, Principal principal){
+		String planJson = service.convertPlan(gptJson, userOrder);
+		return ResponseEntity.ok(planJson);
+	}
+	
+	// 플랜 저장만
+	@PostMapping("/savePlan")
+	public int savePlan(@RequestBody String gptJson, Principal principal){
 		String userId = principal.getName();
 		User user = userRepository.findByUserId(userId);
 		int userNo = user.getUserNo();
-		String planJson = service.createPlan(userOrder);
-		
-		int planNo = planService.registerAPI(userNo, planJson);
-		return ResponseEntity.ok(planNo);
+		int planNo = planService.registerAPI(userNo, gptJson);
+		return planNo;
 	}
 }
