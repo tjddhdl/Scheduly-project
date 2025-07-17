@@ -54,8 +54,11 @@ public class SecurityConfig {
 		.requestMatchers("/addJson").hasAnyRole("free","pay")
 		.requestMatchers("/removeJson").hasAnyRole("free","pay")
 		.requestMatchers("/moveJson").hasAnyRole("free","pay")
-		.requestMatchers("/board/**").permitAll()
+		.requestMatchers("/board/**","/gpt/**","/kakao/**").permitAll()
 		.requestMatchers("gpt/**").hasAnyRole("free","pay")
+
+		
+
 		.anyRequest().authenticated();
 		// 주소 적어넣어야됨
 		
