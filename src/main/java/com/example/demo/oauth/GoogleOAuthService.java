@@ -41,7 +41,7 @@ public class GoogleOAuthService {
 //		return response.getBody();
 //	}
 	
-	private static final String CLIENT_ID = "875926317578-ia85hct28ujlq45hct4an2dugorro69g.apps.googleusercontent.com";
+	private static final String CLIENT_ID = "";
 	
 
     public GoogleUser getGoogleUserInfo(String idTokenString) throws GeneralSecurityException, IOException {
