@@ -1,6 +1,7 @@
 package com.example.demo.planDay;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,8 @@ public interface PlanDayService {
 	void removeJson(int planDayNo, int detailKey);
 	
 	void moveJson(int planDayNo, int detailKey, String move);
-
+	
+	void movePlanDayDate(int planDayNo, LocalDate newDate);
 	default PlanDayDto entityToDto(PlanDay planDay) {
 		int plan = planDay.getPlan().getPlanNo();
 		PlanDayDto plandayDto = PlanDayDto.builder()

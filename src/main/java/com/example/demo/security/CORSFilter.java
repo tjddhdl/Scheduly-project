@@ -32,6 +32,7 @@ public class CORSFilter extends OncePerRequestFilter {
 		response.setHeader("Access-Control-Max-Age", "3600");
 		response.setHeader("Access-Control-Allow-Headers",
 				"Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
+		response.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
 		
 		// OPTIONS 메소드 요청 (사전요청)이 들어오면 무조건 200 OK 코드로 응답
 		// 사전 요청: 브라우저가 본 요청을 보내기 전에, 확인용으로 보내는 요청

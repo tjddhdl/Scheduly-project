@@ -30,6 +30,13 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 	}
 	
 	@Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        // 인증 제외 URL 목록 추가 (필요한 만큼 추가)
+        return path.equals("/google") || path.equals("/login") || path.equals("/register");
+    }
+	
+	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String[] excludePatterns = {
