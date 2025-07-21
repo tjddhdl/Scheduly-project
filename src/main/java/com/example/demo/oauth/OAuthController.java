@@ -15,12 +15,7 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 
-import java.util.Collections;
 
 
 // 프론트 url 경로에 맞춰 수정해야 함 @requestMapping
