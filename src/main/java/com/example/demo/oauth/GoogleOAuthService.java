@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,22 +27,10 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class GoogleOAuthService {
 
-//	private final RestTemplate restTemplate = new RestTemplate();
-//
-//	public GoogleUser getGoogleUserInfo(String accessToken) {
-//		log.info("구글 유저 정보 요청 - AccessToken: {}", accessToken);
-//		String url = "https://www.googleapis.com/oauth2/v3/userinfo";
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setBearerAuth(accessToken);
-//
-//		HttpEntity<Void> request = new HttpEntity<>(headers);
-//		ResponseEntity<GoogleUser> response = restTemplate.exchange(url, HttpMethod.GET, request, GoogleUser.class);
-//		log.info("구글 API 응답: {}", response.getBody());
-//		return response.getBody();
-//	}
+
+	@Value("${google}")
 	
-	private static final String CLIENT_ID = "";
+	private String CLIENT_ID;
 	
 
     public GoogleUser getGoogleUserInfo(String idTokenString) throws GeneralSecurityException, IOException {

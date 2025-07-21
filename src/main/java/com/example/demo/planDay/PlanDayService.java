@@ -13,6 +13,8 @@ public interface PlanDayService {
 	PlanDayDto read(int planDayNo);
 	
 	List<PlanDayDto> getList(int no);
+	
+	List<PlanDayDto> getListByPlanNo(int userNo, int planNo);
 
 	void modify(PlanDayDto planDayDto);
 

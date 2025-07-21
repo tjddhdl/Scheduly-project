@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,5 +165,14 @@ public class PlanDayServiceImpl implements PlanDayService {
 		    planDay.setPlanDayDate(newDate);
 		    repository.save(planDay);
 		
+	}
+
+	@Override
+	public List<PlanDayDto> getListByPlanNo(int userNo, int planNo) {
+		
+		List<PlanDay> planDays = repository.findByPlan_User_UserNoAndPlan_PlanNo(userNo, planNo);
+		return planDays.stream()
+				.map(entity -> entityToDto(entity))
+				.collect(Collectors.toList());	
 	}
 }

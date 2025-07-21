@@ -16,4 +16,6 @@ public interface PlanDayRepository extends JpaRepository<PlanDay, Integer> {
 
 	@Query("SELECT pd FROM PlanDay pd WHERE pd.plan.planNo = :plan")
 	List<PlanDay> findByPlan(@Param("plan")int plan);
+	
+	List<PlanDay> findByPlan_User_UserNoAndPlan_PlanNo(int userNo, int planNo);
 }
