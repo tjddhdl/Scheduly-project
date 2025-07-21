@@ -54,7 +54,7 @@ public class SecurityConfig {
 		.requestMatchers("/addJson").hasAnyRole("free","pay")
 		.requestMatchers("/removeJson").hasAnyRole("free","pay")
 		.requestMatchers("/moveJson").hasAnyRole("free","pay")
-		.requestMatchers("/board/**","/gpt/**","/kakao/**").permitAll()
+		.requestMatchers("/board/**","/kakao/**").hasAnyRole("free","pay")
 		.requestMatchers("gpt/**").hasAnyRole("free","pay")
 
 		

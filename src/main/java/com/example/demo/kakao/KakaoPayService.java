@@ -69,6 +69,8 @@ public class KakaoPayService {
     }
 
     public Map<String, Object> approveKakaoPay(String pgToken, String tid, int userNo) {
+    	System.out.println(pgToken);
+    	System.out.println(tid);
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();

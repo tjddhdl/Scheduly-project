@@ -1,5 +1,7 @@
 package com.example.demo.APIPlan;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,5 +76,11 @@ public class APIPlanServiceTest {
 	void 플랜업로드() {
 		boolean a = apiPlanService.upload(3);
 		System.out.println(a);
+	}
+	
+	@Test
+	void 아이디로보드에없는api플랜목록조회() {
+		List<APIPlanDTO> list = apiPlanService.readByUserId("dddd");
+		System.out.println(list);
 	}
 }

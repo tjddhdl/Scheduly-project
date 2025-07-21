@@ -3,6 +3,12 @@ package com.example.demo.board;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.apiPlan.APIPlanDTO;
+import com.example.demo.apiPlan.APIPlanService;
+import com.example.demo.user.User;
+import com.example.demo.user.UserDto;
+import com.example.demo.user.UserService;
+
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +31,12 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	APIPlanService apiPlanService;
 
 	@GetMapping("/main")
 	public ResponseEntity<Map<String, Object>> getBoard(@RequestParam(name="page", defaultValue = "0") int page,
@@ -44,16 +56,19 @@ public class BoardController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	// 사용자가 완료한 board목록을 불러오고, 그 중 게시판에 올리지 않은 목록을 필터링해 보냄
-//	@GetMapping("/search")
-//	public ResponseEntity<T>
-	
+	//등록페이지에서 유저가 고를 apiPlan목록을 전달
+	@GetMapping("/register")
+	public ResponseEntity<List<APIPlanDTO>> getAPIPlanDTOList(Principal principal){
+		String userId = principal.getName();
+		List<APIPlanDTO> list = apiPlanService.readByUserId(userId);
+		System.out.println(list);
+		return ResponseEntity.ok(list);
+	}
 	
 	@PostMapping("/register")
-	public BodyBuilder boardRegister(@RequestParam BoardDTO dto, Principal principal){
-		System.out.println(dto);
-		boardService.register(dto);
-		return ResponseEntity.accepted();
+	public ResponseEntity<Integer> boardRegister(@RequestBody BoardDTO dto, Principal principal){
+		int boardNo = boardService.register(dto);
+		return ResponseEntity.ok(boardNo);
 	}
 
 }

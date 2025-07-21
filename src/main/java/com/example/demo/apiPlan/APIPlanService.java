@@ -1,5 +1,7 @@
 package com.example.demo.apiPlan;
 
+import java.util.List;
+
 import com.example.demo.apiPlan.APIPlan.APIPlanContentList;
 import com.example.demo.user.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +31,8 @@ public interface APIPlanService {
 	void remove(int no);
 	APIPlanDTO read (int no) throws JsonProcessingException;
 	String download(int no) throws JsonProcessingException;
+	
+	List<APIPlanDTO> readByUserId(String userId);
 	
 	// 플랜 번호를 받아 플랜을 apiplan db에 업로드하는 메서드
 	boolean upload(int no);

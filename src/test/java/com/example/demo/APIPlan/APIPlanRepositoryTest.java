@@ -12,12 +12,19 @@ import com.example.demo.apiPlan.APIPlanRepository;
 import com.example.demo.apiPlan.APIPlan.APIPlanContentList;
 import com.example.demo.apiPlan.APIPlan.StudyItem;
 import com.example.demo.apiPlan.APIPlan.StudyItemDetail;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootTest
 public class APIPlanRepositoryTest {
 
 	@Autowired
 	APIPlanRepository apiPlanRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@Test
 	void 플랜등록() {
@@ -64,5 +71,14 @@ public class APIPlanRepositoryTest {
 		APIPlan apiPlan = apiPlanRepository.findById(2).get();
 		apiPlan.setApiPlanContentList(list);
 		apiPlanRepository.save(apiPlan);
+	}
+	
+	@Transactional
+	@Test
+	void 플랜목록조회() {
+		User user = userRepository.findByUserId("dddd");
+		System.out.println(user);
+		List<APIPlan> list = apiPlanRepository.findByUser(user);
+		System.out.println(list);
 	}
 }

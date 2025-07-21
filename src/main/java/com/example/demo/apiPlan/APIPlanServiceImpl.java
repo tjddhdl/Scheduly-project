@@ -3,6 +3,7 @@ package com.example.demo.apiPlan;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,18 @@ import org.springframework.stereotype.Service;
 import com.example.demo.apiPlan.APIPlan.APIPlanContentList;
 import com.example.demo.apiPlan.APIPlan.StudyItem;
 import com.example.demo.apiPlan.APIPlan.StudyItemDetail;
+import com.example.demo.board.BoardRepository;
 import com.example.demo.plan.Plan;
 import com.example.demo.plan.PlanRepository;
 import com.example.demo.planDay.PlanDay;
 import com.example.demo.planDay.PlanDayDetail;
 import com.example.demo.planDay.PlanDayRepository;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class APIPlanServiceImpl implements APIPlanService{
@@ -29,6 +35,12 @@ public class APIPlanServiceImpl implements APIPlanService{
 	
 	@Autowired
 	PlanDayRepository planDayRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	BoardRepository boardRepository;
 	
 	@Override
 	public int register(APIPlanDTO dto) throws JsonMappingException, JsonProcessingException {
@@ -101,6 +113,27 @@ public class APIPlanServiceImpl implements APIPlanService{
 		}else {
 			return false;			
 		}
+	}
+
+	//유저번호로 api플랜목록 반환
+	@Override
+	@Transactional
+	public List<APIPlanDTO> readByUserId(String userId) {
+		User user = userRepository.findByUserId(userId);
+		List<APIPlan> list = apiPlanRepository.findByUser(user);
+		for(int i =list.size()-1; i>=0; i--) {
+			if(boardRepository.findByApiPlan(list.get(i))!=null) {
+				list.remove(i);
+			}
+		}
+		List<APIPlanDTO> dtoList = list.stream().map(entity->{
+			try {
+				return EntitytoDTO(entity);
+			} catch (JsonProcessingException e) {
+				return null;
+			}
+		}).collect(Collectors.toList());
+		return dtoList;
 	}
 
 }
