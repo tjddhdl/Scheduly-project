@@ -168,6 +168,7 @@ public class PlanDayServiceImpl implements PlanDayService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<PlanDayDto> getListByPlanNo(int userNo, int planNo) {
 		
 		List<PlanDay> planDays = repository.findByPlan_User_UserNoAndPlan_PlanNo(userNo, planNo);
@@ -175,4 +176,41 @@ public class PlanDayServiceImpl implements PlanDayService {
 				.map(entity -> entityToDto(entity))
 				.collect(Collectors.toList());	
 	}
+=======
+	public List<PlanDayDto> getListByPlanNo(int planNo) {
+		List<PlanDay> list = repository.findByPlan(planNo);
+		List<PlanDayDto> dtoList = list.stream().map(e->entityToDto(e)).collect(Collectors.toList());
+		return dtoList;
+	}
+
+	@Override
+	public List<PlanDayDto> reArray(List<PlanDayDto> list, LocalDate date) {
+		list.sort((d1, d2)->d1.planDayDate.compareTo(d2.planDayDate));
+		for(PlanDayDto dto : list) {
+			dto.setPlanDayDate(date);
+			repository.save(dtoToEntity(dto));
+			date = date.plusDays(1);
+		}
+		return list;
+	}
+
+	@Override
+	public List<PlanDayDto> addDateToList(int planNo, int planDayNo) {
+		List<PlanDay> dayList = repository.findByPlan(planNo);
+		dayList.sort((d1,d2)->d1.planDayDate.compareTo(d2.planDayDate));
+		boolean state = false;
+		for(PlanDay day : dayList) {
+			if(day.planDayNo==planDayNo) {
+				state = true;
+			}
+			if(state) {
+				day.planDayDate = day.planDayDate.plusDays(1);
+				repository.save(day);
+			}
+		}
+		List<PlanDayDto> list = dayList.stream().map(e->entityToDto(e)).collect(Collectors.toList());
+		return list;
+	}
+
+>>>>>>> refs/heads/leeseongo
 }

@@ -1,7 +1,9 @@
 package com.example.demo.plan;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import com.example.demo.planDay.PlanDayDto;
 import com.example.demo.user.User;
 
 public interface PlanService {
@@ -18,7 +20,7 @@ public interface PlanService {
 	void remove(int planNo);
 	
 	int registerAPI(int userNo, String json);
-
+	
 	default PlanDto entityToDto(Plan plan) {
 		int user = plan.getUser().getUserNo();
 		PlanDto dto = PlanDto.builder().planNo(plan.getPlanNo()).userNo(user).planName(plan.getPlanName())
@@ -33,6 +35,5 @@ public interface PlanService {
 				.status(Status.valueOf(dto.getStatus())).build();
 
 		return plan;
-
 	}
 }

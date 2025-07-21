@@ -14,7 +14,11 @@ public interface PlanDayService {
 	
 	List<PlanDayDto> getList(int no);
 	
+<<<<<<< HEAD
 	List<PlanDayDto> getListByPlanNo(int userNo, int planNo);
+=======
+	List<PlanDayDto> getListByPlanNo(int planNo);
+>>>>>>> refs/heads/leeseongo
 
 	void modify(PlanDayDto planDayDto);
 
@@ -33,6 +37,11 @@ public interface PlanDayService {
 	void moveJson(int planDayNo, int detailKey, String move);
 	
 	void movePlanDayDate(int planDayNo, LocalDate newDate);
+	
+	List<PlanDayDto> reArray(List<PlanDayDto> list, LocalDate date);
+	
+	List<PlanDayDto> addDateToList(int planNo, int planDayNo);
+	
 	default PlanDayDto entityToDto(PlanDay planDay) {
 		int plan = planDay.getPlan().getPlanNo();
 		PlanDayDto plandayDto = PlanDayDto.builder()
