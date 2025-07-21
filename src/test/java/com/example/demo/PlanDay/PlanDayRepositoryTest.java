@@ -43,7 +43,7 @@ public class PlanDayRepositoryTest {
 	
 	@Test
 	void 플랜데이조회() {
-		List<PlanDay> list = repository.findByPlan(2);
+		List<PlanDay> list = repository.findByPlan(1);
 		for(PlanDay day : list) {
 			System.out.println(day);
 		}

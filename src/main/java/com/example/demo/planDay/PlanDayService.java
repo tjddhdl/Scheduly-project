@@ -13,6 +13,8 @@ public interface PlanDayService {
 	PlanDayDto read(int planDayNo);
 	
 	List<PlanDayDto> getList(int no);
+	
+	List<PlanDayDto> getListByPlanNo(int planNo);
 
 	void modify(PlanDayDto planDayDto);
 
@@ -31,6 +33,11 @@ public interface PlanDayService {
 	void moveJson(int planDayNo, int detailKey, String move);
 	
 	void movePlanDayDate(int planDayNo, LocalDate newDate);
+	
+	List<PlanDayDto> reArray(List<PlanDayDto> list, LocalDate date);
+	
+	List<PlanDayDto> addDateToList(int planNo, int planDayNo);
+	
 	default PlanDayDto entityToDto(PlanDay planDay) {
 		int plan = planDay.getPlan().getPlanNo();
 		PlanDayDto plandayDto = PlanDayDto.builder()

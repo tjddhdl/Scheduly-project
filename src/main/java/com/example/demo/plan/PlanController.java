@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,20 @@ public class PlanController {
     	
     	List<PlanDto> dto = planService.getList(userNo);
     	return ResponseEntity.ok(dto);
+    }
+    
+    @PostMapping("/removePlan")
+    public BodyBuilder removePlan(Principal principal, @RequestParam int planNo){
+    	planService.remove(planNo);
+    	return ResponseEntity.accepted();
+    }
+    
+    @PostMapping("/modifyPlan")
+    public BodyBuilder modifyPlan(Principal principal, @RequestParam int planNo, @RequestParam String planName) {
+    	PlanDto planDto = planService.read(planNo);
+    	planDto.setPlanName(planName);
+    	planService.register(planDto);
+    	return ResponseEntity.accepted();
     }
 }
 

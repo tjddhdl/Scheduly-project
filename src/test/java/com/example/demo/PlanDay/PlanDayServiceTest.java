@@ -72,4 +72,16 @@ public class PlanDayServiceTest {
 	void moveJson() {
 		service.moveJson(1, 2, "up");
 	}
+	
+	@Test
+	void 날짜정렬() {
+		LocalDate date = LocalDate.now();
+		List<PlanDayDto> list = service.getListByPlanNo(12);
+		service.reArray(list, date);
+	}
+	
+	@Test
+	void 날짜미루기() {
+		service.addDateToList(12, 40);
+	}
 }

@@ -25,52 +25,48 @@ public class SecurityConfig {
 	ApiCheckFilter apiCheckFilter() {
 		return new ApiCheckFilter(customUserDetailsService());
 	}
-	
+
 	@Bean
 	public UserService userService() {
 		return new UserServiceImpl();
 	}
-	
+
 	@Bean
 	UserDetailsService customUserDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.formLogin().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.csrf().disable();
-		
-		http.authorizeHttpRequests()
-		.requestMatchers("/register","/login").permitAll()
-		.requestMatchers("/jsonmodify").hasAnyRole("free","pay")
-		.requestMatchers("/jsonstatus").hasAnyRole("free","pay")
-		.requestMatchers("/addJson").hasAnyRole("free","pay")
-		.requestMatchers("/removeJson").hasAnyRole("free","pay")
-		.requestMatchers("/moveJson").hasAnyRole("free","pay")
-		.requestMatchers("/board/**","/gpt/**","/kakao/**","/moveDate","/google").permitAll()
-		.anyRequest().authenticated();
+
+		http.authorizeHttpRequests().requestMatchers("/register", "/login").permitAll().requestMatchers("/jsonmodify")
+				.hasAnyRole("free", "pay").requestMatchers("/jsonstatus").hasAnyRole("free", "pay")
+				.requestMatchers("/addJson").hasAnyRole("free", "pay").requestMatchers("/removeJson")
+				.hasAnyRole("free", "pay").requestMatchers("/moveJson").hasAnyRole("free", "pay")
+				.requestMatchers("/board/**", "/gpt/**", "/kakao/**", "/moveDate", "/google").permitAll()
+				.requestMatchers("/plan/**").hasAnyRole("free", "pay").anyRequest().authenticated();
 		// 주소 적어넣어야됨
-		
+
 		AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
-		builder.userDetailsService(customUserDetailsService())
-				.passwordEncoder(passwordEncoder());
-		
+		builder.userDetailsService(customUserDetailsService()).passwordEncoder(passwordEncoder());
+
 		AuthenticationManager manager = builder.build();
 		http.authenticationManager(manager);
-		
+
 		ApiLoginFilter loginFilter = new ApiLoginFilter("/login", userService());
 		loginFilter.setAuthenticationManager(manager);
-		
+
 		http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
-	
+
 }

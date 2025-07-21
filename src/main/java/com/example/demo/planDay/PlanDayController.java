@@ -1,6 +1,7 @@
 package com.example.demo.planDay;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -88,5 +89,18 @@ public class PlanDayController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
 		}
+	}
+	
+	@PostMapping("/reArray")
+	public ResponseEntity<List<PlanDayDto>> reArray(@RequestParam int planNo, @RequestParam LocalDate date, Principal principal) {
+		List<PlanDayDto> list = service.getListByPlanNo(planNo);
+		List<PlanDayDto> arraied = service.reArray(list, date);
+		return ResponseEntity.ok(arraied);
+	}
+	
+	@PostMapping("/addDate")
+	public ResponseEntity<List<PlanDayDto>> addDateToList(@RequestParam int planNo, @RequestParam int planDayNo, Principal principal){
+		List<PlanDayDto> list = service.addDateToList(planNo, planDayNo);
+		return ResponseEntity.ok(list);
 	}
 }
