@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +35,7 @@ public class KakaoPayService {
         this.userRepository = userRepository;
     }
 
-    public Map<String, String> readyKakaoPay() {
+    public Map<String, String> readyKakaoPay(int userNo) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -67,7 +68,8 @@ public class KakaoPayService {
 
         return result;
     }
-
+    
+    @Transactional
     public Map<String, Object> approveKakaoPay(String pgToken, String tid, int userNo) {
         RestTemplate restTemplate = new RestTemplate();
 

@@ -1,5 +1,6 @@
 package com.example.demo.planDay;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PlanDayServiceImpl implements PlanDayService {
@@ -151,5 +154,15 @@ public class PlanDayServiceImpl implements PlanDayService {
 			}
 		}
 		repository.save(day);
+	}
+
+	@Override
+	public void movePlanDayDate(int planDayNo, LocalDate newDate) {
+		PlanDay planDay = repository.findById(planDayNo)
+		        .orElseThrow(() -> new EntityNotFoundException("해당 PlanDay 없음"));
+		    
+		    planDay.setPlanDayDate(newDate);
+		    repository.save(planDay);
+		
 	}
 }

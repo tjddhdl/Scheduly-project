@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,44 +15,61 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import java.util.Collections;
+
 
 // 프론트 url 경로에 맞춰 수정해야 함 @requestMapping
 @RestController
 @RequiredArgsConstructor
-@Log4j2
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class OAuthController {
 
 	private final GoogleOAuthService googleOAuthService;
 	private final UserRepository userRepository;
 	private final JWTUtil jwtUtil;
-	
+
 	@PostMapping("/google")
-	public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) throws UnsupportedEncodingException{
+	public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) throws UnsupportedEncodingException {
+
 		
+
 		try {
+
+			GoogleUser googleUser = googleOAuthService.getGoogleUserInfo(request.getIdToken());
 			
-		GoogleUser googleUser = googleOAuthService.getGoogleUserInfo(request.getAccessToken());
-		String email = googleUser.getEmail();
-		
-		User user = userRepository.findByUserId(email);
-		if(user==null) {
-			registerGoogleUser(googleUser);
-		}
-		String token = jwtUtil.generateToken(email);
-		return ResponseEntity.ok(new JwtResponse(token));
-		
+
+			String email = googleUser.getEmail();
+
+			User user = userRepository.findByUserId(email);
+			if (user == null) {
+				
+				registerGoogleUser(googleUser);
+			}
+			String token = jwtUtil.generateToken(email);
+			
+			return ResponseEntity.ok(
+				new JwtResponse(token, user.getUserId(),user.getUserName(),user.getRole().name())	
+			);
+
 		} catch (Exception e) {
+			
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("구글 인증 실패");
 		}
 	}
-	
+
 	private User registerGoogleUser(GoogleUser googleUser) {
 		User user = new User();
 		user.setUserId(googleUser.getEmail());
 		user.setPassword("");
 		user.setRole(Role.free);
 		user.setUserName(googleUser.getEmail());
+		
 		return userRepository.save(user);
 	}
+	
 }
