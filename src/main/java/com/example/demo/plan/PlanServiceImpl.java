@@ -125,7 +125,7 @@ public class PlanServiceImpl implements PlanService {
 		
 		List<PlanDay> planDays = planDayRepository.findByPlan_PlanNo(planNo);
 
-        // 하나라도 완료 안된 task 있으면 false 반환
+        
         boolean allFinished = planDays.stream()
             .flatMap(planDay -> planDay.getDetails().stream())
             .allMatch(detail -> detail.getDetailStatus() == StatusDay.FINISHED);
@@ -134,7 +134,7 @@ public class PlanServiceImpl implements PlanService {
             return false;
         }
 
-        // 모두 완료됐으면 플랜 상태 변경
+        
         Plan plan = repository.findById(planNo)
             .orElseThrow(() -> new EntityNotFoundException("플랜을 찾을 수 없습니다"));
 
