@@ -20,6 +20,8 @@ import com.example.demo.user.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class PlanServiceImpl implements PlanService {
 
@@ -72,7 +74,9 @@ public class PlanServiceImpl implements PlanService {
 		if (optional.isPresent()) {
 			Plan plan = optional.get();
 			plan.setPlanName(dto.getPlanName());
+			if (dto.getStatus() != null) {
 			plan.setStatus(Status.valueOf(dto.getStatus()));
+			}
 			repository.save(plan);
 		}
 
@@ -114,6 +118,30 @@ public class PlanServiceImpl implements PlanService {
 			planDayRepository.save(planDay);
 		}
 		return plan.planNo;
+	}
+
+	@Override
+	public boolean updateStatusIfAllTasksFinished(int planNo) {
+		
+		List<PlanDay> planDays = planDayRepository.findByPlan_PlanNo(planNo);
+
+        // 하나라도 완료 안된 task 있으면 false 반환
+        boolean allFinished = planDays.stream()
+            .flatMap(planDay -> planDay.getDetails().stream())
+            .allMatch(detail -> detail.getDetailStatus() == StatusDay.FINISHED);
+
+        if (!allFinished) {
+            return false;
+        }
+
+        // 모두 완료됐으면 플랜 상태 변경
+        Plan plan = repository.findById(planNo)
+            .orElseThrow(() -> new EntityNotFoundException("플랜을 찾을 수 없습니다"));
+
+        plan.setStatus(Status.FINISHED);
+        repository.save(plan);
+
+        return true;
 	}
 
 }

@@ -21,6 +21,8 @@ public interface PlanService {
 	
 	int registerAPI(int userNo, String json);
 	
+	boolean updateStatusIfAllTasksFinished(int planNo);
+
 	default PlanDto entityToDto(Plan plan) {
 		int user = plan.getUser().getUserNo();
 		PlanDto dto = PlanDto.builder().planNo(plan.getPlanNo()).userNo(user).planName(plan.getPlanName())

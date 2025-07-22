@@ -79,9 +79,16 @@ public class PlanDayController {
 	}
 
 	@PostMapping("/removeJson")
-	public void planDayRemoveJson(@RequestBody Map<String, Object> map, Principal principal) {
-		service.removeJson(Integer.parseInt(map.get("planDayNo").toString()),
-				Integer.parseInt(map.get("detailIndex").toString()));
+	public ResponseEntity<Void> planDayRemoveJson(@RequestBody Map<String, Object> map, Principal principal) {
+		int planDayNo = Integer.parseInt(map.get("planDayNo").toString());
+		int detailIndex = Integer.parseInt(map.get("detailIndex").toString());
+		
+		service.removeJson(planDayNo, detailIndex);
+		
+		if(service.isPlanDayEmpty(planDayNo)) {
+			service.removePlanDay(planDayNo);
+		}
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/moveJson")
@@ -103,16 +110,26 @@ public class PlanDayController {
 		}
 	}
 	
-	@PostMapping("/reArray")
-	public ResponseEntity<List<PlanDayDto>> reArray(@RequestParam int planNo, @RequestParam LocalDate date, Principal principal) {
-		List<PlanDayDto> list = service.getListByPlanNo(planNo);
-		List<PlanDayDto> arraied = service.reArray(list, date);
-		return ResponseEntity.ok(arraied);
-	}
+
+//	@PostMapping("/reArray")
+//	public ResponseEntity<List<PlanDayDto>> reArray(@RequestParam int planNo, @RequestParam LocalDate date, Principal principal) {
+//		List<PlanDayDto> list = service.getListByPlanNo(planNo);
+//		List<PlanDayDto> arraied = service.reArray(list, date);
+//		return ResponseEntity.ok(arraied);
+//	}
 	
 	@PostMapping("/addDate")
 	public ResponseEntity<List<PlanDayDto>> addDateToList(@RequestParam int planNo, @RequestParam int planDayNo, Principal principal){
 		List<PlanDayDto> list = service.addDateToList(planNo, planDayNo);
 		return ResponseEntity.ok(list);
 	}
+
+	@PostMapping("/allstatus")
+	public ResponseEntity<?> toggleAllTaskStatus(@RequestBody Map<String, Integer> request) {
+	    Integer planDayNo = request.get("planDayNo");
+	    service.toggleAllStatus(planDayNo);
+	    return ResponseEntity.ok().build();
+	}
+
+
 }
