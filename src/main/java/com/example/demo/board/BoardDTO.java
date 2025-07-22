@@ -22,6 +22,8 @@ public class BoardDTO {
 	
 	String boardName;
 	
+	String userName;
+	
 	String boardContent;
 	
 	int likeCount;

@@ -13,16 +13,15 @@ public interface CommentService {
 		User user = User.builder().userNo(dto.getUser()).build();
 		Board board = Board.builder().boardNo(dto.getBoard()).build();
 		Comment comment = Comment.builder().commentNo(dto.getCommentNo()).user(user).board(board)
-				.commentContent(dto.getCommentContent())
-				.deleteStatus(dto.isDeleteStatus())
-				.build();
+				.commentContent(dto.getCommentContent()).deleteStatus(dto.isDeleteStatus()).build();
 		return comment;
 	}
 
 	default CommentDTO EntityToDTO(Comment comment) {
 		CommentDTO dto = CommentDTO.builder().commentNo(comment.getCommentNo()).user(comment.getUser().getUserNo())
 				.board(comment.getBoard().getBoardNo()).commentContent(comment.getCommentContent())
-				.commentTime(comment.getCommentTime()).deleteStatus(comment.isDeleteStatus()).build();
+				.userName(comment.getUser().getUserName()).commentTime(comment.getCommentTime())
+				.deleteStatus(comment.isDeleteStatus()).build();
 		if (comment.getParentComment() != null) {
 			dto.setParentCommentNo(comment.getParentComment().getCommentNo());
 		}

@@ -8,6 +8,7 @@ import com.example.demo.apiPlan.APIPlanService;
 import com.example.demo.user.User;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -53,6 +54,15 @@ public class BoardController {
 	@GetMapping("/detail")
 	public ResponseEntity<BoardDTO> getBoardDetail(@RequestParam(name="boardNo") int boardNo, Principal principal){
 		BoardDTO dto = boardService.read(boardNo);
+		System.out.println(dto);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping("/apiPlan")
+	public ResponseEntity<APIPlanDTO> getAPIPlanDTO(Principal principal, @RequestParam(name = "apiPlanNo") int apiPlanNo) throws JsonProcessingException{
+		System.out.println(apiPlanNo);
+		APIPlanDTO dto = apiPlanService.read(apiPlanNo);
+		System.out.println(dto);
 		return ResponseEntity.ok(dto);
 	}
 	

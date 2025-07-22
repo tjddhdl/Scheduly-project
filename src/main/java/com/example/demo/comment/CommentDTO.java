@@ -23,6 +23,8 @@ public class CommentDTO {
 	
 	int user;
 	
+	String userName;
+	
 	int board;
 	
 	String commentContent;

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +44,7 @@ public class PlanDayController {
 		User user = userRepository.findByUserId(userId);
 		int userNo = user.getUserNo();
 		
-		List<PlanDayDto> list = service.getListByPlanNo(userNo, planNo);
+		List<PlanDayDto> list = service.getListByPlanNoToAPI(userNo, planNo);
 		return ResponseEntity.ok(list);
 
 	}
@@ -104,15 +103,22 @@ public class PlanDayController {
 	}
 	
 	@PostMapping("/reArray")
-	public ResponseEntity<List<PlanDayDto>> reArray(@RequestParam int planNo, @RequestParam LocalDate date, Principal principal) {
+	public ResponseEntity<List<PlanDayDto>> reArray(@RequestParam(name = "planNo") int planNo, @RequestParam(name="date") LocalDate date, Principal principal) {
 		List<PlanDayDto> list = service.getListByPlanNo(planNo);
 		List<PlanDayDto> arraied = service.reArray(list, date);
 		return ResponseEntity.ok(arraied);
 	}
 	
-	@PostMapping("/addDate")
-	public ResponseEntity<List<PlanDayDto>> addDateToList(@RequestParam int planNo, @RequestParam int planDayNo, Principal principal){
-		List<PlanDayDto> list = service.addDateToList(planNo, planDayNo);
+	// 하루씩 밀기
+	@PostMapping("/pushDate")
+	public ResponseEntity<List<PlanDayDto>> pushDateToList(@RequestParam(name = "planNo") int planNo, @RequestParam(name = "planDayNo") int planDayNo, Principal principal){
+		List<PlanDayDto> list = service.pushDateToList(planNo, planDayNo);
+		return ResponseEntity.ok(list);
+	}
+	
+	@PostMapping("/pullDate")
+	public ResponseEntity<List<PlanDayDto>> pullDateToList(@RequestParam(name = "planNo") int planNo, @RequestParam(name = "planDayNo") int planDayNo, Principal principal){
+		List<PlanDayDto> list = service.pullDateToList(planNo, planDayNo);
 		return ResponseEntity.ok(list);
 	}
 }
