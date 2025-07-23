@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.user.User;
+
 @Service
 public class LikeServiceImpl implements LikeService {
 
@@ -28,6 +30,18 @@ public class LikeServiceImpl implements LikeService {
 			repository.deleteById(likeNo);
 		}
 
+	}
+
+	@Override
+	public LikeDto readByUserNo(int userNo) {
+		User user = User.builder().userNo(userNo).build();
+		Like like = repository.findByUser(user);
+		if (like != null) {
+			LikeDto dto = entityToDto(like);
+			return dto;
+		} else {
+			return null;
+		}
 	}
 
 }

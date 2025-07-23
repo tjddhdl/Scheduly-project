@@ -7,6 +7,8 @@ public interface LikeService {
 	int register(LikeDto dto);
 	void remove(int likeNo);
 	
+	LikeDto readByUserNo(int userNo);
+	
 	default LikeDto entityToDto(Like like) {
 		int user = like.getUser().getUserNo();
 		int board = like.getBoard().getBoardNo();

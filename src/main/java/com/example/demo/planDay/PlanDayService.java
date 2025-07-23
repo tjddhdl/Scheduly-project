@@ -15,9 +15,9 @@ public interface PlanDayService {
 	List<PlanDayDto> getList(int no);
 	
 
-	List<PlanDayDto> getListByPlanNo(int userNo, int planNo);
+	List<PlanDayDto> getListByPlanNoToAPI(int userNo, int planNo);
 
-	
+	List<PlanDayDto> getListByPlanNo(int planNo);
 
 
 	void modify(PlanDayDto planDayDto);
@@ -41,7 +41,9 @@ public interface PlanDayService {
 
 	List<PlanDayDto> reArray(List<PlanDayDto> list, LocalDate date);
 	
-	List<PlanDayDto> addDateToList(int planNo, int planDayNo);
+	List<PlanDayDto> pushDateToList(int planNo, int planDayNo);
+	
+	List<PlanDayDto> pullDateToList(int planNo, int planDayNo);
 	
 
 	public boolean isPlanDayEmpty(int planDayNo);

@@ -18,6 +18,7 @@ public interface BoardService {
 	default BoardDTO EntityToDTO(Board board) {
 		BoardDTO dto = BoardDTO.builder().boardNo(board.getBoardNo()).apiPlan(board.getApiPlan().getApiPlanNo())
 				.boardName(board.getBoardName()).boardContent(board.getBoardContent()).likeCount(board.getLikeCount())
+				.userName(board.getApiPlan().getUser().getUserName())
 				.boardTime(board.getBoardTime()).build();
 		return dto;
 	}

@@ -166,10 +166,15 @@ public class PlanDayServiceImpl implements PlanDayService {
 	}
 
 	@Override
-	public List<PlanDayDto> getListByPlanNo(int userNo, int planNo) {
-
+	public List<PlanDayDto> getListByPlanNoToAPI(int userNo, int planNo) {
 		List<PlanDay> planDays = repository.findByPlan_User_UserNoAndPlan_PlanNo(userNo, planNo);
 		return planDays.stream().map(entity -> entityToDto(entity)).collect(Collectors.toList());
+	}
+
+	public List<PlanDayDto> getListByPlanNo(int planNo) {
+		List<PlanDay> list = repository.findByPlan(planNo);
+		List<PlanDayDto> dtoList = list.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
+		return dtoList;
 	}
 
 	@Override
@@ -188,28 +193,26 @@ public class PlanDayServiceImpl implements PlanDayService {
 
 	@Override
 	public void toggleAllStatus(int planDayNo) {
-		PlanDay day = repository.findById(planDayNo)
-	            .orElseThrow(() -> new IllegalArgumentException("해당 날짜 없음"));
+		PlanDay day = repository.findById(planDayNo).orElseThrow(() -> new IllegalArgumentException("해당 날짜 없음"));
 
-	    List<PlanDayDetail> list = day.getDetails();
+		List<PlanDayDetail> list = day.getDetails();
 
-	    for (PlanDayDetail dayDetail : list) {
-	        if (dayDetail.getDetailStatus() == StatusDay.BEFORE) {
-	            dayDetail.setDetailStatus(StatusDay.FINISHED);
-	        } else {
-	            dayDetail.setDetailStatus(StatusDay.BEFORE);
-	        }
-	    }
+		for (PlanDayDetail dayDetail : list) {
+			if (dayDetail.getDetailStatus() == StatusDay.BEFORE) {
+				dayDetail.setDetailStatus(StatusDay.FINISHED);
+			} else {
+				dayDetail.setDetailStatus(StatusDay.BEFORE);
+			}
+		}
 
-	    repository.save(day);
-		
+		repository.save(day);
+
 	}
-
 
 	@Override
 	public List<PlanDayDto> reArray(List<PlanDayDto> list, LocalDate date) {
-		list.sort((d1, d2)->d1.planDayDate.compareTo(d2.planDayDate));
-		for(PlanDayDto dto : list) {
+		list.sort((d1, d2) -> d1.planDayDate.compareTo(d2.planDayDate));
+		for (PlanDayDto dto : list) {
 			dto.setPlanDayDate(date);
 			repository.save(dtoToEntity(dto));
 			date = date.plusDays(1);
@@ -218,7 +221,25 @@ public class PlanDayServiceImpl implements PlanDayService {
 	}
 
 	@Override
-	public List<PlanDayDto> addDateToList(int planNo, int planDayNo) {
+	public List<PlanDayDto> pushDateToList(int planNo, int planDayNo) {
+		List<PlanDay> dayList = repository.findByPlan(planNo);
+		dayList.sort((d1, d2) -> d1.planDayDate.compareTo(d2.planDayDate));
+		boolean state = false;
+		for (PlanDay day : dayList) {
+			if (day.planDayNo == planDayNo) {
+				state = true;
+			}
+			if (state) {
+				day.planDayDate = day.planDayDate.plusDays(1);
+				repository.save(day);
+			}
+		}
+		List<PlanDayDto> list = dayList.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
+		return list;
+	}
+
+	@Override
+	public List<PlanDayDto> pullDateToList(int planNo, int planDayNo) {
 		List<PlanDay> dayList = repository.findByPlan(planNo);
 		dayList.sort((d1,d2)->d1.planDayDate.compareTo(d2.planDayDate));
 		boolean state = false;
@@ -227,15 +248,12 @@ public class PlanDayServiceImpl implements PlanDayService {
 				state = true;
 			}
 			if(state) {
-				day.planDayDate = day.planDayDate.plusDays(1);
+				day.planDayDate = day.planDayDate.minusDays(1);
 				repository.save(day);
 			}
 		}
 		List<PlanDayDto> list = dayList.stream().map(e->entityToDto(e)).collect(Collectors.toList());
 		return list;
 	}
-
-
-
 
 }

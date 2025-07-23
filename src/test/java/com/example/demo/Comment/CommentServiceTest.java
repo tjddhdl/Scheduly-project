@@ -47,7 +47,7 @@ public class CommentServiceTest {
 
 	@Test
 	void DtoEntity로변환() {
-		CommentDTO dto = new CommentDTO(3, 1, 6, "엘렐레", null, 3, false, null);
+		CommentDTO dto = new CommentDTO(3, 1, null, 6, "엘렐레", null, 3, false, null);
 		Comment comment = commentService.DtoToEntity(dto);
 		System.out.println(comment);
 	}
@@ -55,59 +55,62 @@ public class CommentServiceTest {
 	@Test
 	void 코멘트등록() throws InterruptedException {
 		CommentDTO dto;
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 2").parentCommentNo(1).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 1").deleteStatus(false).build();
+		commentService.register(dto);
+		Thread.sleep(1000);
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 2").parentCommentNo(1).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 3").parentCommentNo(1).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 3").parentCommentNo(1).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 4").parentCommentNo(2).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 4").parentCommentNo(2).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 5").parentCommentNo(2).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 5").parentCommentNo(2).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 6").parentCommentNo(3).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 6").parentCommentNo(3).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 7").parentCommentNo(4).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 7").parentCommentNo(4).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 8").parentCommentNo(5).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 8").parentCommentNo(5).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 9").parentCommentNo(5).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 9").parentCommentNo(5).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 10").parentCommentNo(7).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 10").parentCommentNo(7).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 11").parentCommentNo(6).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 11").parentCommentNo(6).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 12").parentCommentNo(6).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 12").parentCommentNo(6).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 13").parentCommentNo(11).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 13").parentCommentNo(11).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 14").parentCommentNo(11).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 14").parentCommentNo(11).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
-		dto = CommentDTO.builder().user(1).board(8).commentContent("댓글 15").parentCommentNo(14).deleteStatus(false).build();
+		dto = CommentDTO.builder().user(1).board(14).commentContent("댓글 15").parentCommentNo(14).deleteStatus(false).build();
 		commentService.register(dto);
 		Thread.sleep(1000);
 
@@ -115,7 +118,7 @@ public class CommentServiceTest {
 	
 	@Test
 	void 코멘트조회() {
-		List<CommentDTO> list = commentService.readAll(8);
+		List<CommentDTO> list = commentService.readAll(14);
 		System.out.println(list);
 	}
 }
