@@ -238,8 +238,6 @@ public class PlanDayServiceImpl implements PlanDayService {
 		return list;
 	}
 
-	<<<<<<<HEAD
-
 	@Override
 	public List<PlanDayDto> pullDateToList(int planNo, int planDayNo) {
 		List<PlanDay> dayList = repository.findByPlan(planNo);
@@ -256,10 +254,6 @@ public class PlanDayServiceImpl implements PlanDayService {
 		}
 		List<PlanDayDto> list = dayList.stream().map(e->entityToDto(e)).collect(Collectors.toList());
 		return list;
-	}=======
-
-	>>>>>>>branch'main'
-
-	of https:// github.com/tjddhdl/Scheduly-project.git
+	}
 
 }
