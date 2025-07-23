@@ -78,9 +78,16 @@ public class PlanDayController {
 	}
 
 	@PostMapping("/removeJson")
-	public void planDayRemoveJson(@RequestBody Map<String, Object> map, Principal principal) {
-		service.removeJson(Integer.parseInt(map.get("planDayNo").toString()),
-				Integer.parseInt(map.get("detailIndex").toString()));
+	public ResponseEntity<Void> planDayRemoveJson(@RequestBody Map<String, Object> map, Principal principal) {
+		int planDayNo = Integer.parseInt(map.get("planDayNo").toString());
+		int detailIndex = Integer.parseInt(map.get("detailIndex").toString());
+		
+		service.removeJson(planDayNo, detailIndex);
+		
+		if(service.isPlanDayEmpty(planDayNo)) {
+			service.removePlanDay(planDayNo);
+		}
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/moveJson")
@@ -101,13 +108,14 @@ public class PlanDayController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
 		}
 	}
-	
+
 	@PostMapping("/reArray")
 	public ResponseEntity<List<PlanDayDto>> reArray(@RequestParam(name = "planNo") int planNo, @RequestParam(name="date") LocalDate date, Principal principal) {
 		List<PlanDayDto> list = service.getListByPlanNo(planNo);
 		List<PlanDayDto> arraied = service.reArray(list, date);
 		return ResponseEntity.ok(arraied);
 	}
+
 	
 	// 하루씩 밀기
 	@PostMapping("/pushDate")
@@ -121,4 +129,13 @@ public class PlanDayController {
 		List<PlanDayDto> list = service.pullDateToList(planNo, planDayNo);
 		return ResponseEntity.ok(list);
 	}
+
+	@PostMapping("/allstatus")
+	public ResponseEntity<?> toggleAllTaskStatus(@RequestBody Map<String, Integer> request) {
+	    Integer planDayNo = request.get("planDayNo");
+	    service.toggleAllStatus(planDayNo);
+	    return ResponseEntity.ok().build();
+	}
+
+
 }

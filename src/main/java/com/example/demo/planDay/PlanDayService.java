@@ -38,12 +38,19 @@ public interface PlanDayService {
 	
 	void movePlanDayDate(int planDayNo, LocalDate newDate);
 	
+
 	List<PlanDayDto> reArray(List<PlanDayDto> list, LocalDate date);
 	
 	List<PlanDayDto> pushDateToList(int planNo, int planDayNo);
 	
 	List<PlanDayDto> pullDateToList(int planNo, int planDayNo);
 	
+
+	public boolean isPlanDayEmpty(int planDayNo);
+	
+	void toggleAllStatus(int planDayNo);
+	void removePlanDay(int planDayNo);
+
 	default PlanDayDto entityToDto(PlanDay planDay) {
 		int plan = planDay.getPlan().getPlanNo();
 		PlanDayDto plandayDto = PlanDayDto.builder()

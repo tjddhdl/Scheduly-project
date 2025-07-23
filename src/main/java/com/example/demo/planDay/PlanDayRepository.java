@@ -18,4 +18,6 @@ public interface PlanDayRepository extends JpaRepository<PlanDay, Integer> {
 	List<PlanDay> findByPlan(@Param("plan")int plan);
 	
 	List<PlanDay> findByPlan_User_UserNoAndPlan_PlanNo(int userNo, int planNo);
+	
+	List<PlanDay> findByPlan_PlanNo(int planNo);
 }
