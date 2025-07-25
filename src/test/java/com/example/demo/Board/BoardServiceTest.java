@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.example.demo.apiPlan.APIPlan;
 import com.example.demo.board.Board;
@@ -57,7 +58,8 @@ public class BoardServiceTest {
 	
 	@Test
 	void page() {
-		Pageable pageable = PageRequest.of(0, 10);
+		Sort sort = Sort.by(Sort.Order.desc("boardTime"));
+		Pageable pageable = PageRequest.of(0, 10, sort);
 		Page<BoardDTO> page = boardService.findAll(pageable);
 		for(BoardDTO dto : page) {
 			System.out.println(dto);

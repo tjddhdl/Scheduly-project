@@ -256,4 +256,22 @@ public class PlanDayServiceImpl implements PlanDayService {
 		return list;
 	}
 
+	@Override
+	public PlanDayDto dayDetailStatusCheck(int planDayNo) {
+		PlanDay planDay = repository.findById(planDayNo).get();
+		boolean status = true;
+		for(PlanDayDetail detail : planDay.getDetails()) {
+			if(detail.getDetailStatus()==StatusDay.BEFORE) {
+				status = false;
+			}
+		}
+		if(status) {
+			planDay.setStatus(StatusDay.FINISHED);
+		}else {			
+			planDay.setStatus(StatusDay.BEFORE);
+		}
+		repository.save(planDay);
+		return entityToDto(planDay);
+	}
+
 }

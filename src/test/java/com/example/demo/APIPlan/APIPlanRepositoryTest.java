@@ -45,6 +45,8 @@ public class APIPlanRepositoryTest {
 		APIPlan testPlan = new APIPlan().builder()
 				.apiPlanContentList(list)
 				.build();
+		User user = User.builder().userNo(3).build();
+		testPlan.setUser(user);
 		apiPlanRepository.save(testPlan);
 	}
 	

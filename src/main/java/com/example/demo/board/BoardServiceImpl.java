@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class BoardServiceImpl implements BoardService {
 
@@ -55,6 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		return 0;
 	}
 
+	@Transactional
 	@Override
 	public Page<BoardDTO> findAll(Pageable pageable) {
 		Page<Board> list = boardRepository.findAll(pageable);

@@ -84,5 +84,10 @@ public class PlanDayServiceTest {
 	void 날짜미루기() {
 		service.pushDateToList(12, 40);
 	}
+	
+	@Test
+	void 디테일status검사() {
+		service.dayDetailStatusCheck(42);
+	}
 
 }
