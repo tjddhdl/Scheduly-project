@@ -19,10 +19,11 @@ public interface PlanDayService {
 
 	List<PlanDayDto> getListByPlanNo(int planNo);
 
-
 	void modify(PlanDayDto planDayDto);
 
 	PlanDayDetail jsonModify(int planDayNo, int detailKey, String detail);
+	
+	PlanDayDto dayDetailStatusCheck(int planDayNo);
 	
 	void remove(int planDayNo);
 	

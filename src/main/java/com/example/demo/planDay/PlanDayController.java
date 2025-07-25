@@ -66,6 +66,7 @@ public class PlanDayController {
 	public void planDayJsonStatus(@RequestBody Map<String, Object> map, Principal principal) {
 		service.statusChange(Integer.parseInt(map.get("planDayNo").toString()),
 				Integer.parseInt(map.get("detailIndex").toString()));
+		service.dayDetailStatusCheck(Integer.parseInt(map.get("planDayNo").toString()));
 	}
 
 	@PostMapping("/addJson")
@@ -134,6 +135,7 @@ public class PlanDayController {
 	public ResponseEntity<?> toggleAllTaskStatus(@RequestBody Map<String, Integer> request) {
 	    Integer planDayNo = request.get("planDayNo");
 	    service.toggleAllStatus(planDayNo);
+	    service.dayDetailStatusCheck(planDayNo);
 	    return ResponseEntity.ok().build();
 	}
 
