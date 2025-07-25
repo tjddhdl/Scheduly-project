@@ -80,8 +80,9 @@ public class PlanDayServiceTest {
 		service.reArray(list, date);
 	}
 	
-//	@Test
-//	void 날짜미루기() {
-//		service.addDateToList(12, 40);
-//	}
+	@Test
+	void 날짜미루기() {
+		service.pushDateToList(12, 40);
+	}
+
 }

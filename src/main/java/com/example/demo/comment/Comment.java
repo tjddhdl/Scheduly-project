@@ -60,7 +60,7 @@ public class Comment extends BaseEntity{
 	@JoinColumn(name = "parentCommentNo")
 	private Comment parentComment;
 	
-	@OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Builder.Default
 	private List<Comment> childComments = new ArrayList<>();
 	
