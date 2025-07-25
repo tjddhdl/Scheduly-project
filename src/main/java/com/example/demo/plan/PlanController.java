@@ -58,9 +58,9 @@ public class PlanController {
     
 
     @PostMapping("/removePlan")
-    public BodyBuilder removePlan(Principal principal, @RequestParam int planNo){
+    public ResponseEntity<Void> removePlan(Principal principal,  @RequestParam("planNo") int planNo){
     	planService.remove(planNo);
-    	return ResponseEntity.accepted();
+    	return ResponseEntity.accepted().build();
     }
     
     @PostMapping("/modifyPlan")

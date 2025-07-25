@@ -79,7 +79,9 @@ public class APIPlanServiceImpl implements APIPlanService{
 
 	// 플랜 번호를 받아 플랜을 apiplan db에 업로드하는 메서드
 	@Override
-	public boolean upload(int no) {
+	public boolean upload(int no, int userNo) {
+		
+		User user = userRepository.findByUserNo(userNo);
 		// plan 옮기기
 		APIPlanContentList contentList = new APIPlanContentList();
 		Optional<Plan> optional = planRepository.findById(no);
@@ -108,6 +110,7 @@ public class APIPlanServiceImpl implements APIPlanService{
 		contentList.setList(list);
 		APIPlan apiPlan = new APIPlan();
 		apiPlan.setApiPlanContentList(contentList);
+		apiPlan.setUser(user);
 		apiPlanRepository.save(apiPlan);
 		return true;
 		}else {

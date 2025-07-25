@@ -123,7 +123,11 @@ public class GptService {
 		// 응답 처리
 		HttpResponse<String> response = null;
 		try {
+			
 			response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println("Status code: " + response.statusCode());
+		    System.out.println("Response body: " + response.body());
+			
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} catch (InterruptedException e) {

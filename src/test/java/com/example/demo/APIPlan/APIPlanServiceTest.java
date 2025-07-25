@@ -72,11 +72,11 @@ public class APIPlanServiceTest {
 		System.out.println(json);
 	}
 	
-	@Test
-	void 플랜업로드() {
-		boolean a = apiPlanService.upload(3);
-		System.out.println(a);
-	}
+//	@Test
+//	void 플랜업로드() {
+//		boolean a = apiPlanService.upload(3);
+//		System.out.println(a);
+//	}
 	
 	@Test
 	void 아이디로보드에없는api플랜목록조회() {

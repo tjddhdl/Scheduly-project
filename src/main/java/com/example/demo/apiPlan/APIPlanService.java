@@ -35,5 +35,5 @@ public interface APIPlanService {
 	List<APIPlanDTO> readByUserId(String userId);
 	
 	// 플랜 번호를 받아 플랜을 apiplan db에 업로드하는 메서드
-	boolean upload(int no);
+	boolean upload(int no, int userNo);
 }

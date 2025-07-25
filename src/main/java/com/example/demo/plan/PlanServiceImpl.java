@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.plan.PlanJsonDTO.StudyItem;
 import com.example.demo.plan.PlanJsonDTO.StudyItem.StudyItemDetail;
@@ -70,7 +71,7 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public void modify(PlanDto dto) {
 		Optional<Plan> optional = repository.findById(dto.getPlanNo());
-
+		
 		if (optional.isPresent()) {
 			Plan plan = optional.get();
 			plan.setPlanName(dto.getPlanName());
@@ -82,10 +83,12 @@ public class PlanServiceImpl implements PlanService {
 
 	}
 
+	@Transactional
 	@Override
 	public void remove(int planNo) {
 		Optional<Plan> optional = repository.findById(planNo);
 		if (optional.isPresent()) {
+			planDayRepository.deleteByPlanNo(planNo);
 			repository.deleteById(planNo);
 		}
 
