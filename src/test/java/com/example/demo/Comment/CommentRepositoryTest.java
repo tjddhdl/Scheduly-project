@@ -1,5 +1,7 @@
 package com.example.demo.Comment;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -61,5 +63,23 @@ public class CommentRepositoryTest {
 	@Test
 	void 코멘트삭제() {
 		commentRepository.deleteById(1);
+	}
+	
+	@Test
+	void 코멘트전체삭제() {
+		Board board = Board.builder().boardNo(8).build();
+		List<Comment> list = commentRepository.findByBoard(board);
+		list.sort(Comparator.comparingInt(c->getDepth(c)));
+		for(Comment comment : list) {
+			commentRepository.delete(comment);
+		}
+	}
+	private int getDepth(Comment comment) {
+		int depth = 0;
+		while(comment.getParentComment()!=null) {
+			comment = comment.getParentComment();
+			depth++;
+		}
+		return depth;
 	}
 }

@@ -82,6 +82,6 @@ public class PlanDayServiceTest {
 	
 	@Test
 	void 날짜미루기() {
-		service.addDateToList(12, 40);
+		service.pushDateToList(12, 40);
 	}
 }

@@ -57,7 +57,6 @@ public class GptService {
 			throw new RuntimeException(e);
 		}
 		JSONObject responseBody = new JSONObject(response.body());
-
 		JSONArray choices = responseBody.getJSONArray("choices");
 		JSONObject choice = choices.getJSONObject(0);
 

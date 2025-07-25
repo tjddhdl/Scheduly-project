@@ -1,6 +1,7 @@
 package com.example.demo.comment;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -83,13 +84,26 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public void remove(int no) {
 		Comment comment = commentRepository.findById(no).get();
-		
+		comment.setDeleteStatus(true);
+		commentRepository.save(comment);
 	}
 
 	@Override
 	public void removeAll(int boardNo) {
-		// TODO Auto-generated method stub
-
+		Board board = Board.builder().boardNo(8).build();
+		List<Comment> list = commentRepository.findByBoard(board);
+		list.sort(Comparator.comparingInt(c -> getDepth(c)));
+		for (Comment comment : list) {
+			commentRepository.delete(comment);
+		}
 	}
 
+	private int getDepth(Comment comment) {
+		int depth = 0;
+		while (comment.getParentComment() != null) {
+			comment = comment.getParentComment();
+			depth++;
+		}
+		return depth;
+	}
 }

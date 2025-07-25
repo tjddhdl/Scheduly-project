@@ -30,18 +30,12 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 	}
 	
 	@Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String path = request.getRequestURI();
-        // 인증 제외 URL 목록 추가 (필요한 만큼 추가)
-        return path.equals("/google") || path.equals("/login") || path.equals("/register");
-    }
-	
-	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String[] excludePatterns = {
 				"/register",
-				"/login"
+				"/login",
+				"/google"
 		};
 		matcher = new AntPathMatcher();
 		
@@ -53,36 +47,23 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 		}
 		
 		// 나중에 추가해야함
-		String[] patternArr = {
-				"/**"};
-		for(String patt : patternArr) {
-			boolean result = matcher.match(patt, request.getRequestURI());
-			if(result) {
-				boolean check = checkAuthHeader(request);
-				if(check) {
-					String username = getUserId(request);
-					UserDetails details = userDetailsService.loadUserByUsername(username);
-					UsernamePasswordAuthenticationToken authToken = 
-							new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
-					WebAuthenticationDetails webDetails =
-							new WebAuthenticationDetailsSource().buildDetails(request);
-					authToken.setDetails(webDetails);
-					SecurityContextHolder.getContext().setAuthentication(authToken);
-					filterChain.doFilter(request, response);
-					return;
-				} else {
-					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-					response.setContentType("application/json; charset=utf=8");
-					JSONObject json = new JSONObject();
-					json.put("code", "403");
-					json.put("message", "토큰을 넣어주세요");
-					PrintWriter out = response.getWriter();
-					out.print(json);
-					return;
-				}
-			}
-		}
-		filterChain.doFilter(request, response);
+		try {
+            if (checkAuthHeader(request)) {
+                String username = getUserId(request);
+                UserDetails details = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+                filterChain.doFilter(request, response);
+            } else {
+                SecurityContextHolder.clearContext();
+                sendForbidden(response, "유효하지 않은 토큰입니다.");
+            }
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
+            sendForbidden(response, "인증 중 오류가 발생했습니다.");
+        }
 	}
 	
 	boolean checkAuthHeader(HttpServletRequest request) {
@@ -105,4 +86,17 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 		}
 		return null;
 	}
+	
+	void sendForbidden(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setContentType("application/json; charset=utf-8");
+
+        JSONObject json = new JSONObject();
+        json.put("code", "403");
+        json.put("message", message);
+
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
+        out.flush();
+    }
 }

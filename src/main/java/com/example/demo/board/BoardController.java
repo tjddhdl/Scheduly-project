@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.apiPlan.APIPlanDTO;
 import com.example.demo.apiPlan.APIPlanService;
+import com.example.demo.comment.CommentService;
 import com.example.demo.user.User;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 @RequestMapping("/board")
@@ -39,6 +41,9 @@ public class BoardController {
 	@Autowired
 	APIPlanService apiPlanService;
 
+	@Autowired
+	CommentService commentService;
+	
 	@GetMapping("/main")
 	public ResponseEntity<Map<String, Object>> getBoard(@RequestParam(name="page", defaultValue = "0") int page,
 			Principal principal) {
@@ -79,6 +84,13 @@ public class BoardController {
 	public ResponseEntity<Integer> boardRegister(@RequestBody BoardDTO dto, Principal principal){
 		int boardNo = boardService.register(dto);
 		return ResponseEntity.ok(boardNo);
+	}
+	
+	@PostMapping("/delete")
+	public ResponseEntity<Object> boardDelete(@RequestBody int boardNo, Principal principal){
+		commentService.removeAll(boardNo);
+		boardService.remove(boardNo);
+		return ResponseEntity.accepted().build();
 	}
 
 }
