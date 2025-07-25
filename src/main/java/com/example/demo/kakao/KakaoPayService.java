@@ -44,8 +44,10 @@ public class KakaoPayService {
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("cid", CID);
-        params.add("partner_order_id", "order123");
-        params.add("partner_user_id", "user123");
+//        params.add("partner_order_id", "order123");
+        params.add("partner_order_id", "order_" + userNo + "_" + System.currentTimeMillis());
+//        params.add("partner_user_id", "user123");
+        params.add("partner_user_id", "user"+ userNo);
         params.add("item_name", "테스트 상품");
         params.add("quantity", "1");
         params.add("total_amount", "1000");

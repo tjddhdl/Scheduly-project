@@ -1,14 +1,18 @@
 package com.example.demo.oauth;
 
 import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.security.GoogleTokenVerifier;
 import com.example.demo.security.JWTUtil;
 import com.example.demo.user.Role;
 import com.example.demo.user.User;
@@ -27,6 +31,9 @@ public class OAuthController {
 	private final GoogleOAuthService googleOAuthService;
 	private final UserRepository userRepository;
 	private final JWTUtil jwtUtil;
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 
 	@PostMapping("/google")
 	public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) throws UnsupportedEncodingException {
@@ -43,12 +50,12 @@ public class OAuthController {
 			User user = userRepository.findByUserId(email);
 			if (user == null) {
 				
-				registerGoogleUser(googleUser);
+				user = registerGoogleUser(googleUser);
 			}
 			String token = jwtUtil.generateToken(email);
 			
 			return ResponseEntity.ok(
-				new JwtResponse(token, user.getUserId(),user.getUserName(),user.getRole().name())	
+				new JwtResponse(token, user.getUserId(),user.getUserName(),user.getRole().name(),user.getUserNo())	
 			);
 
 		} catch (Exception e) {
@@ -60,9 +67,10 @@ public class OAuthController {
 	private User registerGoogleUser(GoogleUser googleUser) {
 		User user = new User();
 		user.setUserId(googleUser.getEmail());
-		user.setPassword("");
+
+	    user.setPassword("");
 		user.setRole(Role.free);
-		user.setUserName(googleUser.getEmail());
+		user.setUserName(googleUser.getName());
 		
 		return userRepository.save(user);
 	}
