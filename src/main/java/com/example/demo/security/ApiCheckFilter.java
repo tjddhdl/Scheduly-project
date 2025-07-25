@@ -68,6 +68,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 	
 	boolean checkAuthHeader(HttpServletRequest request) {
 		String auth = request.getHeader("Authorization");
+		
 		if(auth!=null) {
 			String id = null;
 			id = jwtUtil.validateAndExtract(auth);
