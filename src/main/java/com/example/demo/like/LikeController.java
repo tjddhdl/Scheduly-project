@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,17 @@ public class LikeController {
 			boardDTO.setLikeCount(boardDTO.getLikeCount()+1);
 			boardService.register(boardDTO);
 			return ResponseEntity.ok(boardDTO.getLikeCount());
+		}
+	}
+	
+	@GetMapping("/like")
+	public ResponseEntity<Boolean> getLike(Principal principal, @RequestParam(name = "boardNo")int boardNo){
+		UserDto userDto = userService.read(principal.getName());
+		LikeDto likeDto = likeService.findByUserAndBoard(userDto.getUserNo(), boardNo);
+		if(likeDto==null) {
+			return ResponseEntity.ok(false);
+		}else {
+			return ResponseEntity.ok(true);
 		}
 	}
 }

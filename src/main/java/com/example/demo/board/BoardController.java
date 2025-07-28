@@ -64,7 +64,6 @@ public class BoardController {
 	@GetMapping("/detail")
 	public ResponseEntity<BoardDTO> getBoardDetail(@RequestParam(name = "boardNo") int boardNo, Principal principal) {
 		BoardDTO dto = boardService.read(boardNo);
-		System.out.println(dto);
 		return ResponseEntity.ok(dto);
 	}
 
