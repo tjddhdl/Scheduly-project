@@ -196,13 +196,14 @@ public class PlanDayServiceImpl implements PlanDayService {
 		PlanDay day = repository.findById(planDayNo).orElseThrow(() -> new IllegalArgumentException("해당 날짜 없음"));
 
 		List<PlanDayDetail> list = day.getDetails();
+		
+		boolean allFinished = list.stream()
+			.allMatch(detail -> detail.getDetailStatus() == StatusDay.FINISHED);
+		
+		StatusDay newStatus = allFinished ? StatusDay.BEFORE : StatusDay.FINISHED;
 
 		for (PlanDayDetail dayDetail : list) {
-			if (dayDetail.getDetailStatus() == StatusDay.BEFORE) {
-				dayDetail.setDetailStatus(StatusDay.FINISHED);
-			} else {
-				dayDetail.setDetailStatus(StatusDay.BEFORE);
-			}
+			dayDetail.setDetailStatus(newStatus);
 		}
 
 		repository.save(day);
