@@ -6,6 +6,7 @@ import com.example.demo.user.User;
 public interface LikeService {
 	int register(LikeDto dto);
 	void remove(int likeNo);
+	LikeDto findByUserAndBoard(int userNo, int boardNo);
 	
 	LikeDto readByUserNo(int userNo);
 	

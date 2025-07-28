@@ -32,7 +32,7 @@ public class LikeController {
 	@PostMapping("/click")
 	public ResponseEntity<Integer> like(Principal principal, @RequestBody int boardNo) {
 		UserDto dto = userService.read(principal.getName());
-		LikeDto likeDto = likeService.readByUserNo(dto.getUserNo());
+		LikeDto likeDto = likeService.findByUserAndBoard(dto.getUserNo(), boardNo);
 		if(likeDto!=null) {
 			likeService.remove(likeDto.getLikeNo());
 			BoardDTO boardDTO = boardService.read(boardNo);
