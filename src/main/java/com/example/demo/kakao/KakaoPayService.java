@@ -53,9 +53,9 @@ public class KakaoPayService {
         params.add("total_amount", "1000");
         params.add("vat_amount", "100");
         params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://localhost:3000/pay/success");
-        params.add("cancel_url", "http://localhost:3000/pay/cancel");
-        params.add("fail_url", "http://localhost:3000/pay/fail");
+        params.add("approval_url", "http://scheduly.duckdns.org/pay/success");
+        params.add("cancel_url", "http://scheduly.duckdns.org/pay/cancel");
+        params.add("fail_url", "http://scheduly.duckdns.org/pay/fail");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity("https://kapi.kakao.com/v1/payment/ready", request, Map.class);
