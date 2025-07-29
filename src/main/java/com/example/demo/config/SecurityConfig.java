@@ -48,7 +48,7 @@ public class SecurityConfig {
 		http.csrf().disable();
 		
 		http.authorizeHttpRequests()
-		.requestMatchers("/register","/login").permitAll()
+		.requestMatchers("/register","/login","/checkId").permitAll()
 		.requestMatchers("/jsonmodify").hasAnyRole("free","pay")
 		.requestMatchers("/jsonstatus").hasAnyRole("free","pay")
 		.requestMatchers("/addJson").hasAnyRole("free","pay")

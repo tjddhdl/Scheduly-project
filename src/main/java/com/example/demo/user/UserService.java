@@ -8,6 +8,8 @@ public interface UserService {
 
 	UserDto read(String userId);
 	
+	boolean isUserIdExist(String userId);
+	
 	default UserDto entityToDto(User user) {
 		UserDto dto = UserDto.builder().userNo(user.getUserNo()).userId(user.getUserId()).password(user.getPassword())
 				.userName(user.getUserName()).role(user.getRole().toString()).build();

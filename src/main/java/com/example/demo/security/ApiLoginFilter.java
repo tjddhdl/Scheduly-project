@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
 import com.example.demo.user.UserDto;
@@ -108,7 +109,13 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		
 		JSONObject json = new JSONObject();
 		json.put("code", "401");
-		json.put("message", failed.getMessage());
+		if (failed instanceof UsernameNotFoundException) {
+	        json.put("message", "아이디가 존재하지 않습니다.");
+	    } else if (failed instanceof BadCredentialsException) {
+	        json.put("message", "비밀번호가 틀렸습니다.");
+	    } else {
+	        json.put("message", failed.getMessage());
+	    }
 		
 		PrintWriter out = response.getWriter();
 		out.print(json);
